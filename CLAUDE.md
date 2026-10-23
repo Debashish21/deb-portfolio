@@ -35,7 +35,18 @@ All six plan tasks are built: lib maths + tests, page shell (nav, carousel, case
 | `tsc --noEmit` | ✅ clean |
 | `npm run lint` | ✅ 0 errors; 7 warnings, all in the gitignored `.playwright-mcp/` scratch scripts |
 | `npm run build` | ✅ builds, `/` prerendered static |
-| `npm test` | ✅ 82/82 pass |
+| `npm test` | ✅ 87/87 pass |
+
+### SEO / AEO (2026-10-23)
+
+Live at https://debashish-profile.vercel.app (`site.url` in `content/site.ts`; change it there if the domain changes).
+
+- Full name "Debashish Ram" in title, description, nav (surname hidden under 420px), footer.
+- `app/layout.tsx` metadata: canonical, Open Graph (profile), Twitter card, robots.
+- `app/opengraph-image.tsx` share card; `app/robots.ts`; `app/sitemap.ts`.
+- JSON-LD (Person, WebSite, ProfilePage with projects) from `lib/seo.ts`, rendered in `app/page.tsx`.
+- `app/llms.txt/route.ts`: Markdown summary for AI answer engines, built from `content/`.
+- To do (owner): Google Search Console verification + sitemap submit; add the site URL to LinkedIn and GitHub profiles. Next lever: per-project pages (`/projects/[slug]`) so case-study text is crawlable.
 
 ### Open items
 

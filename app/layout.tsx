@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/content/site";
 import { Geist, Geist_Mono, Permanent_Marker } from "next/font/google";
 import "./globals.css";
 import "./styles/shell.css";
@@ -25,9 +26,28 @@ const marker = Permanent_Marker({
   weight: ["400"],
 });
 
+const title = `${site.name} — ${site.role} Portfolio | Spot it. Shape it. Ship it.`;
+
 export const metadata: Metadata = {
-  title: "Debashish — Spot it. Shape it. Ship it.",
-  description: "Product Owner who turns everyday annoyances into products people want.",
+  metadataBase: new URL(site.url),
+  title,
+  description: site.description,
+  applicationName: `${site.name} Portfolio`,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "profile",
+    url: "/",
+    siteName: `${site.name} Portfolio`,
+    title,
+    description: site.description,
+    firstName: site.name.split(" ")[0],
+    lastName: site.name.split(" ").slice(1).join(" "),
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image", title, description: site.description },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

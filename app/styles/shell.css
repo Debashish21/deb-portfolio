@@ -68,6 +68,13 @@
   }
 }
 
+/* Narrow phones: the surname would push the nav off-screen. It stays in the DOM, title and footer. */
+@media (max-width: 419px) {
+  .brand-last {
+    display: none;
+  }
+}
+
 /* temporary layout for the stubs; Tasks 3–5 replace these sections */
 .stage {
   --r: 1;

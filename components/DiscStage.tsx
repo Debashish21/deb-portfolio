@@ -242,7 +242,7 @@ export default function DiscStage({ active, hidden, reduced, onGo, onOpen, onSte
                   <div className="disc-burnspin">
                     <div className="disc-roll" style={{ transform: `rotate(${o * 110}deg)` }}>
                       <div className="disc-spin" style={{ animationPlayState: front ? "running" : "paused" }}>
-                        <ImageSlot src={p.disc} shape="circle" placeholder={`${p.title} screenshot`} alt="" />
+                        <ImageSlot src={p.disc} shape="circle" placeholder={`${p.title} screenshot`} alt={`${p.title} screenshot`} />
                       </div>
                     </div>
                     <div className="disc-blank" />

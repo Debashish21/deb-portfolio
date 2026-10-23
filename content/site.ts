@@ -1,8 +1,13 @@
 // Copy, links, doodles and timings for the single-page site. Case studies live in content/projects/.
 
 export const site = {
-  name: "Debashish",
+  name: "Debashish Ram",
   role: "Product Owner",
+  /** Canonical address: metadata, sitemap, structured data and llms.txt all build on it. */
+  url: "https://debashish-profile.vercel.app",
+  /** Search snippet and share-card text. Leads with the name people search for. */
+  description:
+    "Debashish Ram is a Product Owner who turns everyday annoyances into products people want, with the customer, the tech and the numbers in view. Portfolio of shipped projects and case studies.",
   email: "debashishram@gmail.com",
   cvHref: "/Debashish-CV.pdf",
   linkedin: "https://www.linkedin.com/in/debashish-ram/",

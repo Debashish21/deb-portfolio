@@ -7,6 +7,9 @@ import { SoundIcon } from "./icons";
 
 export type NavTarget = "top" | "projects" | "contact";
 
+const [first, ...rest] = site.name.split(" ");
+const last = rest.join(" ");
+
 export default function Nav({ current, onGo }: { current: "projects" | "contact" | null; onGo: (t: NavTarget) => void }) {
   const sound = useSound();
   return (
@@ -14,7 +17,10 @@ export default function Nav({ current, onGo }: { current: "projects" | "contact"
       <nav className="nav" aria-label="Main">
         <button className="brand" onClick={() => onGo("top")}>
           <span className="brand-dot" />
-          <span>{site.name}</span>
+          <span>
+            {first}
+            <span className="brand-last"> {last}</span>
+          </span>
         </button>
         <div className="nav-links">
           <button className="nav-link" aria-current={current === "projects" ? "true" : undefined} onClick={() => onGo("projects")}>
