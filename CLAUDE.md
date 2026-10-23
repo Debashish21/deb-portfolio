@@ -35,12 +35,11 @@ All six plan tasks are built: lib maths + tests, page shell (nav, carousel, case
 | `tsc --noEmit` | ✅ clean |
 | `npm run lint` | ✅ 0 errors; 7 warnings, all in the gitignored `.playwright-mcp/` scratch scripts |
 | `npm run build` | ✅ builds, `/` prerendered static |
-| `npm test` | ⚠️ 80/82 pass |
+| `npm test` | ✅ 82/82 pass |
 
 ### Open items
 
-- **Failing tests in `lib/recognize.test.ts`**: "ignores a straight line and an open zigzag" and "ignores random scribbles". `THRESHOLD` in `lib/recognize.ts` was lowered to 0.4 after the tests were written, so a zigzag scores as a star (0.497) and 20/50 random scribbles match. Decide: raise the threshold back, or update the tests to match the looser hero detection.
 - **Next.js security advisory**: `next build` warns 16.4.0 has a known vulnerability. Upgrade with `next upgrade --agent=security`.
 - Contact details (`content/site.ts`) and the CV (`public/Debashish-CV.pdf`) are real; no placeholders left.
 - Vitest warns `vitest.config.ts` uses ESM in a CJS package (harmless; rename to `.mts` to silence).
-- Not yet deployed.
+- Deploy: Vercel project, repo `github.com/Debashish21/deb-portfolio` (`main`).

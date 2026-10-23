@@ -13,6 +13,8 @@ const SIZE = 250;
 const HALF_DIAG = 0.5 * Math.sqrt(2 * SIZE * SIZE);
 const PHI = 0.5 * (-1 + Math.sqrt(5));
 const THRESHOLD = 0.4;
+/** Every target shape is closed: a stroke that ends further than this × its size from its start isn't one. */
+const MAX_GAP = 0.25;
 
 const dist = (a: Pt, b: Pt) => Math.hypot(a.x - b.x, a.y - b.y);
 const centroid = (ps: Pt[]): Pt => {
@@ -135,8 +137,16 @@ const TEMPLATES: { name: ShapeName; pts: Pt[] }[] = raw.flatMap(([name, pts]) =>
   [pts, [...pts].reverse()].map((p) => ({ name, pts: normalise(p)! })),
 );
 
-/** Best matching shape for a stroke, or null if nothing matches well enough. */
+/** Best matching shape for a stroke, or null if it isn't closed or nothing matches well enough. */
 export function recognize(ps: Pt[], threshold = THRESHOLD): Match | null {
+  if (ps.length < 2) return null;
+  const b = bbox(ps);
+  if (dist(ps[0], ps[ps.length - 1]) > MAX_GAP * Math.max(b.w, b.h)) return null;
+  return match(ps, threshold);
+}
+
+/** The template match alone, for callers that have already checked the stroke closes (ShapeDetector). */
+function match(ps: Pt[], threshold: number): Match | null {
   const p = normalise(ps);
   if (!p) return null;
   let best: Match | null = null;
@@ -220,7 +230,7 @@ export class ShapeDetector<P extends StrokePt = StrokePt> {
     const cands = [...this.cands].sort((a, b) => b.perim - a.perim);
     this.cands = [];
     for (const c of cands) {
-      const points = this.P.slice(c.i, c.j + 1), m = recognize(points);
+      const points = this.P.slice(c.i, c.j + 1), m = match(points, THRESHOLD);
       if (m) {
         this.floor = c.j + 1;
         return { ...m, points };
