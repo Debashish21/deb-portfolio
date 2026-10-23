@@ -1,0 +1,498 @@
+{
+  "$comment": "Plan for the Projects case studies. Each project is written one at a time into content/projects/<slug>.ts and rendered by the case-study view. Status moves planned -> written -> reviewed.",
+  "created": "2026-10-13",
+  "rules": {
+    "voice": "Product-led and professional. Debashish is a Product Owner who builds; engineering depth supports the product story, it does not replace it.",
+    "noData": "Showcase the product and its features only. No usage figures, money amounts, personal records, test counts or coverage stats (owner decision, 2026-10-13).",
+    "noSecrets": "No tokens, keys, device IDs, account names, emails or internal hostnames.",
+    "structure": "Every case study fills the design's five lenses: Problem Statement (Product Owner), Product View (Product Manager), Engineering View (Tech Partner), Result (Owner of outcomes), Future Scope (Strategist). Each lens has 2 decisions (D1 decision + why, D2 trade-off + cost).",
+    "diagrams": "Use a diagram wherever a flow or architecture is easier to see than to read. Diagrams are data (stages -> nodes -> labelled arrows) rendered as responsive HTML, so they stay on-brand and readable on mobile."
+  },
+  "excluded": [
+    {
+      "repo": "DSX-WhatsApp-DigitalOrdering",
+      "reason": "Excluded by owner"
+    },
+    {
+      "repo": "pepl-wiki-agent",
+      "reason": "Excluded by owner"
+    },
+    {
+      "repo": "my-profile",
+      "reason": "Excluded by owner (previous portfolio)"
+    },
+    {
+      "repo": "joke-claude",
+      "reason": "Not selected by owner"
+    },
+    {
+      "repo": "gmat-error-log",
+      "reason": "Only a browser profile folder, no project code"
+    },
+    {
+      "repo": "debshell",
+      "reason": "Empty folder"
+    },
+    {
+      "repo": "deb_portfolio",
+      "reason": "This site"
+    }
+  ],
+  "siteChanges": [
+    "Extend content/portfolio.ts Project type: slug, tagline, platform, stack, links, status, and per-lens sections",
+    "Case-study view renders per-project lens content: paragraphs, bullets, feature grids, step lists, callouts, diagrams, decisions",
+    "New Diagram component: stage/flow diagrams from data, horizontal on desktop, vertical on mobile",
+    "Hero meta adds Platform and a stack row; lens nav and hats stay as designed"
+  ],
+  "order": [
+    "piggy-bank",
+    "mission-w",
+    "gmat-club-capture",
+    "airlyrics",
+    "airlyrics-led-bridge",
+    "ado-sprint-planner",
+    "lifeos"
+  ],
+  "projects": [
+    {
+      "slug": "piggy-bank",
+      "repo": "piggy_bank",
+      "title": "Piggy Bank",
+      "tagline": "Turns bank alert emails into an honest answer to “where did my money go?”",
+      "platform": "Web app + data pipeline",
+      "stack": [
+        "Python",
+        "Gmail API",
+        "Gemini",
+        "Supabase",
+        "Next.js 15",
+        "GitHub Actions",
+        "Vercel"
+      ],
+      "links": [],
+      "sources": [
+        "README.md",
+        "CLAUDE.md",
+        "RESUME.md",
+        "DESIGN_BRIEF.md",
+        "git log"
+      ],
+      "angle": "The headline insight: money leaving the account is not money spent. Product decisions about what NOT to count (card bill payments, investments, other people's shares) are the story.",
+      "lenses": {
+        "problem": "Indian banks give individuals no API; the only reliable record is per-transaction alert emails. Generic finance apps show 'money out', which mixes real spending with card bill payments and investments.",
+        "product": "Spending-first headline (spent / fixed / usual flow), payment rails glance, category drill-down to merchant level (dining out vs ordered in), review queue for unknown merchants, splits and manual expenses. Deliberate non-goals: multi-user, income/balance, AI chat.",
+        "engineering": "Daily cron pipeline: Gmail fetch -> regex parser for each alert template -> merchant resolution chain (seed exact -> seed substring -> Gemini fallback, cached and capped -> unclassified) -> dedup on email id + reference id -> Supabase. Web: Server Components read, Server Actions write, no browser DB key, single-password gate.",
+        "result": "Shipped: automated daily ingestion, Spend overview, Review deck, Ledger with inline edits and splits, Profile/settings. Data-quality guardrails: humans write the merchant seed, machines only write guesses on rows.",
+        "future": "Trends screen (complete months vs complete months), Splitwise push for splits, CSV export as the backup path, CI for tests."
+      },
+      "diagrams": [
+        {
+          "id": "pipeline",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "Gmail -> Parse -> Resolve -> Dedup -> Supabase -> Dashboard"
+        },
+        {
+          "id": "resolution-chain",
+          "lens": "engineering",
+          "kind": "chain",
+          "what": "Seed exact -> Seed substring -> Gemini (closed category list, cached) -> Unclassified -> human review promotes to seed"
+        },
+        {
+          "id": "money-out",
+          "lens": "product",
+          "kind": "split",
+          "what": "Money out = Spending + Card bill payments + Investments; only Spending is 'spent'"
+        }
+      ],
+      "assets": {
+        "disc": "Screenshot of /spend (to capture later)",
+        "video": null
+      },
+      "status": "written",
+      "contentFile": "content/projects/piggy-bank.ts",
+      "note": "Live app link omitted: personal finance app behind a password."
+    },
+    {
+      "slug": "mission-w",
+      "repo": "mission-w",
+      "title": "Mission W",
+      "tagline": "A phone-first GMAT practice portal built around one daily habit.",
+      "platform": "Mobile-first web app",
+      "stack": [
+        "Next.js 16",
+        "React 19",
+        "Tailwind v4",
+        "Supabase (Postgres, Auth, RLS)",
+        "KaTeX",
+        "Recharts",
+        "Vitest",
+        "Vercel"
+      ],
+      "links": [],
+      "sources": [
+        "README.md",
+        "CLAUDE.md",
+        "docs/superpowers/specs/*",
+        "docs/superpowers/plans/*",
+        "supabase/migrations",
+        "git log"
+      ],
+      "angle": "A study habit product: one upload, one exam-style set, every mistake becomes review work. Then three modes for three moods: Practice, Quiz, Reel.",
+      "lenses": {
+        "problem": "GMAT prep tools are desktop-heavy and score-obsessed; daily practice on the phone needed a tight loop that turns mistakes into the next session's work.",
+        "product": "Daily loop (upload -> exam -> reveal -> review pool -> dashboard). Modes: Practice (count-up, reveal at end), Quiz (countdown, auto-submit, start wish), Reel (swipe feed with instant feedback, combos, confetti). Bank + set builder: add to bank without testing, build a set by section/type/difficulty with live match count.",
+        "engineering": "Strict JSON contract + validator; content-hash dedupe; shared question bank with per-user progress via RLS; server-side re-grading; pure, unit-tested domain modules (feed ordering, combo, engaged timer that pauses when the tab is hidden, quiz timing, bank selection); KaTeX rendering and poly-set grouping.",
+        "result": "Shipped Practice, Review, Dashboard, Reel, Quiz and the Set Builder; shared bank that the GMAT Club Capture extension also feeds.",
+        "future": "Adaptive set builder weighted by error patterns, spaced-repetition for the review pool, mock-section mode."
+      },
+      "diagrams": [
+        {
+          "id": "daily-loop",
+          "lens": "product",
+          "kind": "cycle",
+          "what": "Upload -> Exam run -> Submit & reveal -> Review pool -> Dashboard -> next day"
+        },
+        {
+          "id": "modes",
+          "lens": "product",
+          "kind": "compare",
+          "what": "Practice vs Quiz vs Reel: timer, feedback timing, intent"
+        },
+        {
+          "id": "architecture",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "JSON upload / bank -> validate + hash -> Supabase (questions shared, progress per user, RLS) -> server actions -> runners"
+        }
+      ],
+      "assets": {
+        "disc": "Phone screenshot of Reel or Practice (to capture later)",
+        "video": null
+      },
+      "status": "written",
+      "contentFile": "content/projects/mission-w.ts"
+    },
+    {
+      "slug": "gmat-club-capture",
+      "repo": "gmat-club-capture",
+      "title": "GMAT Club Capture",
+      "tagline": "A private Chrome extension that turns every practice test into a searchable archive and a mistake coach.",
+      "platform": "Chrome extension (MV3, personal, unpublished)",
+      "stack": [
+        "TypeScript",
+        "Chrome MV3",
+        "Vite",
+        "Dexie (IndexedDB)",
+        "Supabase",
+        "KaTeX",
+        "Vitest"
+      ],
+      "links": [],
+      "sources": [
+        "README.md",
+        "CLAUDE.md",
+        "git log",
+        "src/ layout"
+      ],
+      "angle": "An archive first, a coach second. The product principle is 'classify, then narrate': explain why a wrong option was tempting, never show a scoreboard.",
+      "care": "Personal, unpublished tool; describe capabilities and architecture, not site internals or payload formats. Mention it is load-unpacked only and content stays private.",
+      "lenses": {
+        "problem": "Timed practice tests show the question once; afterwards there is no personal archive of what was seen, what was chosen, or why a wrong option was tempting.",
+        "product": "Capture while you test, automatic backfill of answers and explanations after the section, archive reader with search and math rendering, sync to the shared bank, attempt tracking, error taxonomy with time as a second axis. Explicit non-goals: answers during a live question, score prediction, gamification.",
+        "engineering": "Isolated + page-context content scripts, one-file selector map for DOM drift, two capture modes, enrich-never-downgrade merge rules, passive observer that can never interfere with a submission, backfill in a document context, INSERT-only sync with a shared content hash, deterministic aggregation layer with minimum-sample thresholds before any AI narration.",
+        "result": "Shipped capture, backfill, archive reader, export, bank sync and attempt tracking with the aggregation layer.",
+        "future": "AI narration on top of the deterministic layer (Gemini, gated by thresholds), review queue shared with Mission W."
+      },
+      "diagrams": [
+        {
+          "id": "capture-flow",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "Test page -> capture -> local archive (Dexie) -> backfill after section -> sync to shared bank"
+        },
+        {
+          "id": "classify-narrate",
+          "lens": "product",
+          "kind": "stages",
+          "what": "Attempts -> deterministic classify (taxonomy, pace vs own median, min-N gates) -> narration only for slices that qualify"
+        }
+      ],
+      "assets": {
+        "disc": "Options-page archive screenshot (to capture later)",
+        "video": null
+      },
+      "status": "written",
+      "contentFile": "content/projects/gmat-club-capture.ts"
+    },
+    {
+      "slug": "airlyrics",
+      "repo": "AirLyrics",
+      "title": "AirLyrics",
+      "tagline": "Synced lyrics that live in the dead space around the MacBook notch.",
+      "platform": "macOS menu-bar app",
+      "stack": [
+        "Swift",
+        "SwiftUI",
+        "AppKit (NSPanel)",
+        "Swift Concurrency",
+        "Combine",
+        "CoreData",
+        "MediaRemote adapter",
+        "ScriptingBridge"
+      ],
+      "links": [
+        {
+          "label": "Product site",
+          "url": "https://debashish21.github.io/AirLyrics/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/Debashish21/AirLyrics"
+        }
+      ],
+      "sources": [
+        "README.md",
+        "CLAUDE.md",
+        "brag-output/*",
+        "git log",
+        "screenshots/"
+      ],
+      "angle": "Restraint as the product: invisible until useful. The wedge vs competitors is synced lyrics + notch geometry + zero expansion.",
+      "lenses": {
+        "problem": "Notch apps compete for attention with expanding panels; lyric tickers ignore the notch. Nobody used the dead space beside the notch for something quietly useful.",
+        "product": "One line at a time beside the notch, marquee scroll timed to finish before the next line, dims on pause, disappears when there is nothing to show. Spotify + Apple Music, broad language coverage via a provider chain. Settings: font size, opacity, launch at login, per-app disable.",
+        "engineering": "Layered architecture (sources -> adapters -> arbitration -> core -> UI). Two now-playing providers merged by an arbiter into one event stream. Lyrics provider chain with cache-first lookup and ordered fallbacks. 50ms sync tick with binary search for the active line. Click-through, non-activating overlay panel that joins all Spaces.",
+        "result": "Shipped Phase 2: AirLyrics rename, settings panel, Apple Music, multi-provider lyrics, product website and release build.",
+        "future": "Word-level karaoke fill, translations, non-notched Mac fallback strip, Homebrew cask."
+      },
+      "diagrams": [
+        {
+          "id": "layers",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "Sources -> Adapters -> Arbitration -> Core -> UI"
+        },
+        {
+          "id": "one-cycle",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "Track changes -> state machine -> cache / provider chain -> parse -> sync engine -> notch strip"
+        },
+        {
+          "id": "states",
+          "lens": "product",
+          "kind": "states",
+          "what": "Playing (line shown) / Paused (dimmed) / Nothing playing or no lyrics (hidden)"
+        }
+      ],
+      "assets": {
+        "disc": "/projects/airlyrics/disc.jpg (composed from the product film)",
+        "video": "/projects/airlyrics/film.mp4",
+        "poster": "/projects/airlyrics/poster.jpg",
+        "gallery": [
+          "notch-1.jpg",
+          "notch-2.jpg",
+          "settings.jpg",
+          "poster.jpg"
+        ]
+      },
+      "status": "written",
+      "contentFile": "content/projects/airlyrics.ts"
+    },
+    {
+      "slug": "airlyrics-led-bridge",
+      "repo": "AirLyrics/spike",
+      "title": "AirLyrics × LED",
+      "tagline": "The lyric on your screen, mirrored live to a 32×32 Bluetooth LED panel on your desk.",
+      "platform": "macOS app feature + Python daemon + BLE hardware",
+      "stack": [
+        "Swift",
+        "Unix sockets",
+        "Python asyncio",
+        "Bluetooth LE",
+        "Pillow",
+        "BDF bitmap fonts"
+      ],
+      "links": [],
+      "sources": [
+        "spike/README.md",
+        "spike/HANDOVER.md",
+        "spike/gif_spike/FINDINGS.md",
+        "spike/bg_explore/NOTES.md",
+        "git log"
+      ],
+      "angle": "Hardware spike run like a product: phased de-risking (handshake -> render -> daemon -> idle experience), each phase with a visible proof.",
+      "care": "No device names or BLE identifiers.",
+      "lenses": {
+        "problem": "A 32x32 grid has to make a lyric line readable at a glance, keep pace with the song, and never slow the Mac app down.",
+        "product": "Opt-in mirror (default off), crisp bitmap-font lyric frames with vivid gradients, paging paced by time-to-next-line, a now-playing idle card (title + equalizer) between lines.",
+        "engineering": "AirLyrics publishes newline-JSON events over a local Unix socket, fire-and-forget off the main actor. Python daemon holds one BLE link, latest-wins coalescing (no backlog), idle/active state machine, firmware-side looping GIF for idle and direct frames for lyrics.",
+        "result": "Working pipeline from notch to panel with a polished idle state; the Mac app behaves exactly as before when the mirror is off.",
+        "future": "Package the bridge as a helper the app launches itself, more panel sizes, karaoke-style word highlights on the panel."
+      },
+      "diagrams": [
+        {
+          "id": "bridge-pipeline",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "Sync engine -> LED mirror service -> Unix socket -> bridge daemon (coalesce, state machine, render) -> BLE -> LED panel"
+        },
+        {
+          "id": "phases",
+          "lens": "product",
+          "kind": "steps",
+          "what": "Phase 0 handshake -> Phase 1 render text -> Phase 2 daemon -> idle card"
+        }
+      ],
+      "assets": {
+        "disc": "/projects/airlyrics-led/disc.png (bridge renderer, LED look)",
+        "video": "/projects/airlyrics-led/panel.mp4 (generated from renderer frames)",
+        "poster": "/projects/airlyrics-led/poster.jpg",
+        "gallery": [
+          "lyric-1.jpg",
+          "lyric-2.jpg",
+          "lyric-3.jpg",
+          "idle-card.jpg"
+        ]
+      },
+      "status": "written",
+      "contentFile": "content/projects/airlyrics-led.ts"
+    },
+    {
+      "slug": "ado-sprint-planner",
+      "repo": "ado-sprint-planner",
+      "title": "Azure DevOps Sprint Planner",
+      "tagline": "A Raycast extension that turns your sprint into a day-by-day plan you can actually finish.",
+      "platform": "Raycast extension (macOS)",
+      "stack": [
+        "TypeScript",
+        "React",
+        "Raycast API",
+        "Azure DevOps REST",
+        "Gemini (optional)"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/Debashish21/ado-sprint-planner"
+        }
+      ],
+      "sources": [
+        "README.md",
+        "CHANGELOG.md",
+        "package.json",
+        "src/lib/plan.ts",
+        "src/lib/ai-plan.ts",
+        "src/lib/ado.ts",
+        "git log",
+        "metadata/ screenshots"
+      ],
+      "angle": "Built by a Product Owner for the daily reality of a sprint: a personal layer over ADO that never writes unless you ask, and an AI that may only decide order.",
+      "lenses": {
+        "problem": "ADO shows the team's board, not 'what do I do today'. Personal progress, rolling unfinished work and spillover risk are invisible until the sprint ends.",
+        "product": "Five commands: My Sprint, My Tickets, Plan Sprint, Today's To-Do, Sprint Glance (menu bar). Local 3-stage status, defer shelf, quick notes, fit summary and 'at risk of spillover', backlog pulled in behind sprint work, explicit push-to-ADO only.",
+        "engineering": "Rolling queue projected onto remaining working days at an even pace capped by capacity; overflow is surfaced, never dumped on the last day. Deterministic ordering (WIP -> priority -> Bug/Story/Task). Optional Gemini ordering with schema-constrained output, validated against real ids, falling back to deterministic. Open states read from ADO state categories (cached weekly), response cache, sequential batch fetch, per-item local storage keys, timezone-safe dates.",
+        "result": "Five commands shipped and prepared for the Raycast Store, with custom icon and store screenshots.",
+        "future": "Story-point capacity, parent-child clustering, ticket detail view, PR and build views on the same auth layer."
+      },
+      "diagrams": [
+        {
+          "id": "planner",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "ADO fetch (open states) -> order (Deterministic | AI order only, validated) -> project onto working days -> Today / At risk / Glance"
+        },
+        {
+          "id": "local-vs-ado",
+          "lens": "product",
+          "kind": "split",
+          "what": "Local layer (status, defer, plan, notes) vs ADO (read always, write only on explicit push)"
+        }
+      ],
+      "assets": {
+        "disc": "/projects/ado-sprint-planner/disc.jpg",
+        "cover": "/projects/ado-sprint-planner/cover.jpg",
+        "gallery": [
+          "commands.jpg",
+          "today.jpg",
+          "my-tickets.jpg",
+          "status.jpg",
+          "quick-note.jpg"
+        ]
+      },
+      "status": "written",
+      "contentFile": "content/projects/ado-sprint-planner.ts"
+    },
+    {
+      "slug": "lifeos",
+      "repo": "LifeOS",
+      "title": "LifeOS",
+      "tagline": "A personal chief of staff that captures, prioritises and schedules your life from one chat.",
+      "platform": "Telegram bot + web app",
+      "stack": [
+        "TypeScript",
+        "grammY",
+        "Next.js 16",
+        "Notion API",
+        "Google Calendar API",
+        "Gemini / Gemma",
+        "Ollama",
+        "Prisma + Postgres",
+        "NextAuth"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/Debashish21/LifeOS"
+        }
+      ],
+      "sources": [
+        "README.md",
+        "web/DESIGN.md",
+        "web/lib/agent.ts",
+        "web/lib/memory.ts",
+        "web/lib/models.ts",
+        "web/prisma/schema.prisma",
+        "src/services",
+        "git log"
+      ],
+      "angle": "Not a task app, a chief of staff: time-aware behaviour, life-balance nudges, and a hard daily limit on meaningful tasks.",
+      "lenses": {
+        "problem": "Tasks, ideas and calendar live in different places; capture is slow and prioritisation needs a coach, not another list.",
+        "product": "Natural-language capture into life areas, ideas inbox, ICE scoring and snooze, chat that plans around the calendar, time-of-day and day-of-week modes, user context (peak hours, protected time, daily limit), memory of preferences, model switcher, 'Quiet Intelligence' design system.",
+        "engineering": "Sprint 1 Telegram bot: two-stage pipeline (intent detection -> classify and write to Notion / query and reply / disambiguate). Web: tool-calling agent loop (tasks, calendar, free slots, create events) with parallel tool execution, dynamic system prompt, rolling history window + session summaries, background memory extraction with relevance-selected injection, provider-agnostic LLM layer (local Ollama or Google).",
+        "result": "Shipped the capture bot and the web app with chat, dashboard, calendar and profile; Google sign-in; model switcher.",
+        "future": "Prioritisation and triage (Sprint 2), weekly review and scheduling (Sprint 3), smarter long-term memory (Sprint 4)."
+      },
+      "diagrams": [
+        {
+          "id": "agent-loop",
+          "lens": "engineering",
+          "kind": "cycle",
+          "what": "Message -> prompt (time mode + user context + relevant memory) -> model -> tool calls in parallel (Notion, Calendar) -> answer -> memory extraction"
+        },
+        {
+          "id": "bot-pipeline",
+          "lens": "engineering",
+          "kind": "stages",
+          "what": "Telegram message -> intent -> capture / query / disambiguate -> Notion"
+        },
+        {
+          "id": "time-modes",
+          "lens": "product",
+          "kind": "steps",
+          "what": "Morning planning -> Deep work -> Midday -> Afternoon admin -> Wind down -> Capture only"
+        }
+      ],
+      "assets": {
+        "disc": "Chat or dashboard screenshot (to capture later)",
+        "video": null
+      },
+      "status": "written",
+      "contentFile": "content/projects/lifeos.ts"
+    }
+  ],
+  "updated": "2026-10-13",
+  "assetBuild": "scripts/build-project-assets.py"
+}

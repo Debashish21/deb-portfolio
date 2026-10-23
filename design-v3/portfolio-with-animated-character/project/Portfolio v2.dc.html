@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;background:oklch(0.13 0.008 290);color:oklch(0.96 0.006 290);-webkit-font-smoothing:antialiased}
+a{color:oklch(0.96 0.006 290);text-decoration:none}
+a:hover{color:oklch(0.72 0.19 295)}
+@keyframes write{0%{stroke-dashoffset:700;fill:transparent}70%{stroke-dashoffset:0;fill:transparent}100%{stroke-dashoffset:0;fill:#fff}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes reveal{from{clip-path:circle(0% at 50% 54%)}to{clip-path:circle(150% at 50% 54%)}}
+@keyframes rise{from{transform:translateY(110%)}to{transform:none}}
+@keyframes unreveal{from{clip-path:circle(150% at 50% 54%)}to{clip-path:circle(0% at 50% 54%)}}
+@keyframes softIn{from{opacity:0;backdrop-filter:blur(0)}to{opacity:1;backdrop-filter:blur(12px)}}
+@keyframes softOut{from{opacity:1}to{opacity:0}}
+@keyframes settle{from{opacity:0;transform:scale(1.03);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes bgIn{from{background-color:transparent}to{background-color:oklch(0.13 0.008 290)}}
+@keyframes glowIn{0%{opacity:0;transform:scale(.6)}60%{opacity:1}100%{opacity:.8;transform:scale(1.1)}}
+@keyframes liftOff{0%{transform:translate(var(--dx),var(--dy)) rotateZ(-6deg) rotateY(22deg) rotateX(8deg) translateZ(0);opacity:1}24%{transform:translate(var(--dx),calc(var(--dy) - 24px)) rotateZ(-6deg) rotateY(14deg) rotateX(14deg) translateZ(170px);opacity:1}55%{transform:translate(0,-30px) rotateZ(0) rotateY(0) rotateX(0) translateZ(260px);opacity:1}78%{transform:translate(0,-30px) rotateY(180deg) translateZ(300px);opacity:1}100%{transform:translate(0,-40px) rotateY(360deg) translateZ(520px);opacity:0;filter:blur(6px)}}
+@keyframes shadowDrop{0%{opacity:1;filter:blur(0)}30%{opacity:.6;filter:blur(18px)}100%{opacity:0;filter:blur(30px)}}
+@keyframes sheenSweep{from{transform:rotate(0)}to{transform:rotate(-540deg)}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+@keyframes pulseRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+@keyframes wave{0%,100%{transform:rotate(0)}15%{transform:rotate(-7deg)}30%{transform:rotate(6deg)}45%{transform:rotate(-5deg)}60%{transform:rotate(3deg)}75%{transform:rotate(0)}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" onMouseMove="{{ onMove }}" onMouseLeave="{{ onLeave }}" style="position:relative;height:100vh;min-height:560px;overflow:hidden;font-family:'Geist',system-ui,sans-serif;background:oklch(0.13 0.008 290);display:flex;flex-direction:column">
+
+  <nav style="position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px clamp(20px,5vw,64px);max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto">
+    <button onClick="{{ goAbout }}" style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:500;letter-spacing:-0.01em;background:none;border:0;padding:0;color:oklch(0.96 0.006 290);cursor:pointer;font-family:inherit">
+      <span style="width:8px;height:8px;border-radius:50%;background:oklch(0.72 0.19 295)"></span>
+      <span>Debashish</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:clamp(20px,3vw,40px);font-size:14px">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="3">
+        <button onClick="{{ n.go }}" style="position:relative;background:none;border:0;padding:6px 0;cursor:pointer;font-family:inherit;font-size:14px;color:{{ n.color }}" style-hover="color:oklch(0.96 0.006 290)">
+          <span>{{ n.label }}</span>
+          <span style="position:absolute;left:50%;bottom:-4px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:oklch(0.72 0.19 295);opacity:{{ n.dot }};transition:opacity .2s"></span>
+        </button>
+      </sc-for>
+    </div>
+  </nav>
+
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
+    <main data-screen-label="About" style="position:relative;z-index:2;flex:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:48px;max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto;padding:24px clamp(20px,5vw,64px) 64px;animation:screenIn .6s cubic-bezier(.2,.7,.2,1) both">
+      <div style="flex:1 1 340px;max-width:600px;display:flex;flex-direction:column;gap:28px">
+        <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.72 0.19 295)">Product Owner</div>
+        <h1 style="margin:0;font-weight:300;font-size:clamp(38px,4.6vw,64px);line-height:1.12;letter-spacing:-0.03em;text-wrap:pretty">Bootstrapping ideas until I make it <span style="color:oklch(0.72 0.19 295);font-weight:400">one day</span>.</h1>
+        <p style="margin:0;max-width:440px;font-size:17px;line-height:1.6;color:oklch(0.74 0.01 290);text-wrap:pretty">I'm Debashish. I turn half-baked ideas into products, one sprint at a time.</p>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:8px">
+          <button onClick="{{ goProjects }}" style="display:flex;align-items:center;gap:12px;height:52px;padding:0 26px;border-radius:999px;border:0;background:oklch(0.62 0.21 295);color:#fff;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;transition:transform .2s, background .2s" style-hover="background:oklch(0.68 0.21 295);transform:translateY(-2px)">
+            <span>See my projects</span><span>→</span>
+          </button>
+          <button onClick="{{ goContact }}" style="background:none;border:0;padding:6px 0;font-family:inherit;font-size:15px;color:oklch(0.86 0.01 290);cursor:pointer;border-bottom:1px solid oklch(0.4 0.02 290)" style-hover="color:oklch(0.96 0.006 290);border-bottom-color:oklch(0.72 0.19 295)">Say hello</button>
+        </div>
+      </div>
+      <div style="flex:0 1 360px;display:flex;justify-content:center;position:relative;padding-top:110px">
+        <div ref="{{ charRef }}" style="position:relative;width:min(380px,36vw,50vh);min-width:220px;aspect-ratio:380/440;transition:transform .45s cubic-bezier(.2,.7,.2,1);transform-origin:50% 90%">
+          <image-slot id="avatar-bitmoji" shape="rounded" radius="32" fit="contain" placeholder="Drop your Bitmoji / avatar (transparent PNG works best)" style="width:100%;height:100%;display:block"></image-slot>
+          <div style="position:absolute;top:-118px;left:-20px;z-index:3;pointer-events:none">{{ bubble }}</div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Projects" style="position:relative;z-index:2;flex:1;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;padding:8px clamp(20px,5vw,64px) 32px;overflow:hidden;animation:screenIn .6s cubic-bezier(.2,.7,.2,1) both">
+      <sc-if value="{{ outro }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:30;pointer-events:none;background:oklch(0.13 0.008 290);animation:softOut 1.2s cubic-bezier(.4,0,.2,1) both"></div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;position:relative;z-index:3">
+        <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.14em;color:oklch(0.6 0.01 290)"><span style="color:oklch(0.72 0.19 295)">{{ curNum }}</span> / {{ total }}</div>
+        <h2 style="margin:0;font-weight:300;font-size:clamp(30px,3.4vw,46px);line-height:1.1;letter-spacing:-0.03em">{{ cur.title }}</h2>
+      </div>
+      <div ref="{{ stageRef }}" onMouseMove="{{ onStageMove }}" onMouseLeave="{{ onStageLeave }}" style="flex:1;position:relative;width:100%;min-height:260px;--s:clamp(170px,min(38vh,28vw),340px);--px:0;--py:0;--lift:0px">
+        <div style="position:absolute;left:50%;top:54%;width:var(--s);aspect-ratio:1/1;transform:translate(-50%,-50%);perspective:calc(var(--s) * 3.2);transform-style:preserve-3d">
+          <sc-for list="{{ discs }}" as="d" hint-placeholder-count="5">
+            <div style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.22,1.1,.36,1), opacity .6s;transform:{{ d.transform }};z-index:{{ d.z }};opacity:{{ d.op }};visibility:{{ d.vis }};--glint:{{ d.glint }}">
+              <div style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform:{{ d.tilt }}">
+                <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;transform:translate3d(0,7%,-18px) scale(.97);background:radial-gradient(circle closest-side, transparent 30%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.2) 80%, transparent 100%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-4px);background:linear-gradient(160deg,#d7d9dc,#8d9196 55%,#c4c7cb);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;background:oklch(0.22 0.015 295);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)">
+                  <div style="position:absolute;inset:0;transition:transform 1s cubic-bezier(.22,1,.36,1);transform:rotate({{ d.roll }})">
+                    <div style="position:absolute;inset:0;animation:spin 24s linear infinite;animation-play-state:{{ d.spin }}">
+                      <image-slot id="{{ d.slotId }}" shape="circle" placeholder="{{ d.ph }}" style="width:100%;height:100%;display:block"></image-slot>
+                    </div>
+                  </div>
+                  <div style="position:absolute;left:32%;top:32%;width:36%;height:36%;border-radius:50%;pointer-events:none;border:3px solid rgba(225,228,234,.85);box-shadow:inset 0 0 0 8px rgba(232,235,239,.55), inset 0 0 0 9px rgba(255,255,255,.9);box-sizing:border-box"></div>
+                  <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.65;background:conic-gradient(from calc(var(--glint) + var(--px) * 70deg), transparent 0deg, rgba(255,255,255,.5) 16deg, transparent 38deg, transparent 140deg, rgba(150,215,255,.32) 168deg, rgba(255,170,225,.32) 186deg, rgba(255,236,170,.26) 200deg, transparent 224deg, transparent 360deg), radial-gradient(circle at calc(32% + var(--px) * 18%) calc(24% + var(--py) * 18%), rgba(255,255,255,.3), transparent 46%)"></div>
+                </div>
+  <sc-if value="{{ d.isActive }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ openCase }}" aria-label="Open project" style="position:absolute;left:39%;top:39%;width:22%;height:22%;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;padding:0;transform:translateZ(10px);z-index:5" style-hover="background:oklch(0.62 0.21 295 / 0.85);border-color:oklch(0.72 0.19 295)">Open</button>
+              </sc-if>
+              </div>
+              <sc-if value="{{ d.inactive }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ d.go }}" aria-label="{{ d.label }}" style="position:absolute;inset:0;border-radius:50%;background:transparent;border:0;cursor:pointer;padding:0"></button>
+              </sc-if>
+              
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;position:relative;z-index:3">
+        <p style="margin:0;max-width:460px;font-size:15px;line-height:1.6;color:oklch(0.72 0.01 290);text-wrap:pretty">{{ cur.desc }}</p>
+        <button onClick="{{ openCase }}" style="display:flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:oklch(0.96 0.006 290);font-family:inherit;font-size:14px;cursor:pointer;transition:background .2s,border-color .2s" style-hover="background:oklch(0.62 0.21 295);border-color:oklch(0.62 0.21 295)"><span>View case study</span><span>→</span></button>
+        <div style="display:flex;align-items:center;gap:16px">
+          <button onClick="{{ prev }}" disabled="{{ atStart }}" aria-label="Previous project" style="width:44px;height:44px;border-radius:50%;border:1px solid oklch(0.32 0.015 290);background:transparent;color:oklch(0.9 0.006 290);font-size:16px;cursor:pointer;font-family:inherit" style-hover="border-color:oklch(0.72 0.19 295)">←</button>
+          <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:oklch(0.55 0.01 290);white-space:nowrap">Scroll · Click · ← →</span>
+          <button onClick="{{ next }}" disabled="{{ atEnd }}" aria-label="Next project" style="width:44px;height:44px;border-radius:50%;border:1px solid oklch(0.32 0.015 290);background:transparent;color:oklch(0.9 0.006 290);font-size:16px;cursor:pointer;font-family:inherit" style-hover="border-color:oklch(0.72 0.19 295)">→</button>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Contact" style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto;padding:0 clamp(20px,5vw,64px);animation:screenIn .6s cubic-bezier(.2,.7,.2,1) both">
+      <div style="flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:64px;padding:24px 0 48px">
+        <div style="flex:0 1 320px;display:flex;justify-content:center;position:relative;padding-top:110px">
+          <div style="position:relative;width:min(300px,30vw,42vh);min-width:200px;aspect-ratio:380/440;transform-origin:50% 95%;animation:wave 2.6s ease-in-out infinite">
+            <image-slot id="avatar-bitmoji" shape="rounded" radius="32" fit="contain" placeholder="Same avatar as the hero" style="width:100%;height:100%;display:block"></image-slot>
+          </div>
+          <div style="position:absolute;top:0;left:0;z-index:3;pointer-events:none">{{ byeBubble }}</div>
+        </div>
+        <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:28px">
+          <h2 style="margin:0;font-weight:300;font-size:clamp(34px,4vw,56px);line-height:1.12;letter-spacing:-0.03em;text-wrap:pretty">Got an idea worth bootstrapping? Let's talk.</h2>
+          <a href="mailto:hello@debashish.com" style="align-self:flex-start;display:flex;align-items:center;gap:14px;font-size:clamp(20px,2.2vw,28px);font-weight:400;letter-spacing:-0.01em;padding-bottom:8px;border-bottom:1px solid oklch(0.72 0.19 295)" style-hover="color:oklch(0.72 0.19 295)">
+            <span>hello@debashish.com</span><span style="color:oklch(0.72 0.19 295)">→</span>
+          </a>
+        </div>
+      </div>
+      <footer style="display:flex;justify-content:space-between;gap:16px;padding:20px 0 28px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:oklch(0.6 0.01 290);border-top:1px solid oklch(0.22 0.01 290)">
+        <span>© 2026 Debashish</span>
+        <button onClick="{{ goProjects }}" style="background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;color:oklch(0.6 0.01 290);cursor:pointer" style-hover="color:oklch(0.96 0.006 290)">← Back to projects</button>
+      </footer>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ caseOpen }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ caseRef }}" onScroll="{{ onCaseScroll }}" data-screen-label="Case study" style="position:absolute;inset:0;z-index:20;overflow-y:auto;scroll-behavior:smooth;animation:bgIn .5s 1.3s both">
+      <sc-if value="{{ closing }}" hint-placeholder-val="{{ false }}">
+        <div style="position:fixed;inset:0;z-index:50;pointer-events:none;background:oklch(0.13 0.008 290);animation:softIn 1s cubic-bezier(.4,0,.2,1) both"></div>
+      </sc-if>
+      <div style="position:fixed;inset:0;z-index:40;pointer-events:none;animation:fadeOut .6s 2.1s forwards">
+        <div style="position:absolute;inset:0;background:oklch(0.13 0.008 290 / 0.35);backdrop-filter:blur(10px) saturate(130%);-webkit-backdrop-filter:blur(10px) saturate(130%);animation:softOut .45s reverse both"></div>
+        <div style="position:absolute;inset:0;background:oklch(0.13 0.008 290);animation:softOut .6s 1.2s reverse both"></div>
+        <div style="position:absolute;left:50%;top:50%;width:70vmin;height:70vmin;margin:-35vmin 0 0 -35vmin;border-radius:50%;background:radial-gradient(circle closest-side, oklch(0.6 0.22 295 / 0.35), transparent 70%);animation:glowIn 1.4s .8s cubic-bezier(.4,0,.2,1) both"></div>
+        <div style="position:absolute;inset:0;perspective:1100px;perspective-origin:50% 50%">
+          <div style="position:absolute;left:50%;top:50%;width:{{ intro.size }};height:{{ intro.size }};margin-left:{{ intro.half }};margin-top:{{ intro.half }};border-radius:50%;background:radial-gradient(circle closest-side, rgba(0,0,0,.55), transparent 75%);transform:translate(var(--dx),calc(var(--dy) + 6%)) scale(.95);--dx:{{ intro.dx }};--dy:{{ intro.dy }};animation:shadowDrop 1s cubic-bezier(.3,0,.2,1) both"></div>
+          <div style="position:absolute;left:50%;top:50%;width:{{ intro.size }};height:{{ intro.size }};margin-left:{{ intro.half }};margin-top:{{ intro.half }};transform-style:preserve-3d;--dx:{{ intro.dx }};--dy:{{ intro.dy }};animation:liftOff 1.9s cubic-bezier(.5,0,.25,1) both">
+            <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-5px);background:linear-gradient(160deg,#d7d9dc,#8d9196 55%,#c4c7cb);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+            <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-2.5px);background:#a9adb3;-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+            <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;background:oklch(0.22 0.015 295);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)">
+              <div style="position:absolute;inset:0;animation:spin 1.2s .5s cubic-bezier(.4,0,.2,1) both">
+                <image-slot id="{{ intro.slot }}" shape="circle" placeholder="" style="width:100%;height:100%;display:block;pointer-events:none"></image-slot>
+              </div>
+              <div style="position:absolute;left:32%;top:32%;width:36%;height:36%;border-radius:50%;border:3px solid rgba(225,228,234,.85);box-shadow:inset 0 0 0 8px rgba(232,235,239,.55);box-sizing:border-box"></div>
+              <div style="position:absolute;inset:0;border-radius:50%;mix-blend-mode:screen;background:conic-gradient(from 120deg, transparent 0deg, rgba(255,255,255,.55) 16deg, transparent 38deg, transparent 140deg, rgba(150,215,255,.35) 168deg, rgba(255,170,225,.35) 186deg, rgba(255,236,170,.3) 200deg, transparent 224deg);animation:sheenSweep 1.9s linear both"></div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:0 24px">
+          <div style="overflow:hidden"><div style="font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:0.16em;color:oklch(0.72 0.19 295);animation:rise .7s 1.15s cubic-bezier(.2,.8,.2,1) both">{{ curNum }} / {{ total }}</div></div>
+          <div style="overflow:hidden;padding-bottom:8px"><div style="font-size:clamp(48px,8vw,120px);font-weight:300;letter-spacing:-0.04em;line-height:1;animation:rise .9s 1.2s cubic-bezier(.2,.8,.2,1) both">{{ cur.title }}</div></div>
+        </div>
+      </div>
+
+      <div style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,5vw,64px);background:oklch(0.13 0.008 290 / 0.55);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border-bottom:1px solid rgba(255,255,255,.07);animation:softOut .6s 2s reverse both">
+        <button onClick="{{ closeCase }}" style="display:flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:oklch(0.92 0.006 290);font-family:inherit;font-size:13px;cursor:pointer" style-hover="background:rgba(255,255,255,.1)"><span>←</span><span>All projects</span></button>
+        <span style="font-size:14px;color:oklch(0.86 0.006 290)">{{ cur.title }}</span>
+        <button onClick="{{ nextCase }}" style="display:flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:oklch(0.92 0.006 290);font-family:inherit;font-size:13px;cursor:pointer" style-hover="background:rgba(255,255,255,.1)"><span>Next</span><span>→</span></button>
+      </div>
+
+      <div style="max-width:1200px;margin:0 auto;padding:32px clamp(20px,5vw,64px) 120px;animation:screenIn .9s 2s cubic-bezier(.2,.7,.2,1) both">
+        <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:repeating-linear-gradient(135deg, oklch(0.17 0.01 290) 0 14px, oklch(0.15 0.01 290) 14px 28px)">
+          <sc-if value="{{ hasVideo }}" hint-placeholder-val="{{ false }}">
+            <video src="{{ cur.video }}" autoplay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          </sc-if>
+          <sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
+              <span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">▶</span>
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.62 0.01 290)">Project video · 16:9</span>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px;padding:56px 0 64px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="flex:1 1 420px;display:flex;flex-direction:column;gap:18px">
+            <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.14em;color:oklch(0.72 0.19 295)">{{ curNum }} / {{ total }}</div>
+            <h1 style="margin:0;font-weight:300;font-size:clamp(40px,5vw,72px);line-height:1.05;letter-spacing:-0.035em">{{ cur.title }}</h1>
+            <p style="margin:0;max-width:560px;font-size:18px;line-height:1.6;color:oklch(0.74 0.01 290);text-wrap:pretty">{{ cur.desc }}</p>
+          </div>
+          <div style="display:grid;grid-template-columns:auto auto;gap:10px 28px;font-size:14px">
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Role</span><span>{{ cur.role }}</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Year</span><span>{{ cur.year }}</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Team</span><span>{{ cur.team }}</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(170px,220px) minmax(0,1fr);gap:clamp(32px,6vw,80px);padding-top:56px">
+          <aside style="position:sticky;top:96px;align-self:start">
+            <div style="display:flex;flex-direction:column;gap:2px;padding:8px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
+              <sc-for list="{{ lenses }}" as="L" hint-placeholder-count="5">
+                <button onClick="{{ L.go }}" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:13px;border:0;background:{{ L.bg }};color:{{ L.color }};font-family:inherit;font-size:14px;text-align:left;cursor:pointer;transition:background .25s,color .25s" style-hover="color:oklch(0.96 0.006 290)">
+                  <span style="font-family:'Geist Mono',monospace;font-size:10px;color:{{ L.numColor }}">{{ L.num }}</span>
+                  <span>{{ L.title }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </aside>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ lenses }}" as="L" hint-placeholder-count="5">
+              <section data-lens="{{ L.idx }}" style="display:flex;flex-direction:column;gap:20px;padding:0 0 96px">
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                  <span style="font-family:'Geist Mono',monospace;font-size:12px;color:oklch(0.72 0.19 295)">{{ L.num }}</span>
+                  <span style="padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.82 0.01 290)">Hat · {{ L.hat }}</span>
+                </div>
+                <h2 style="margin:0;font-weight:300;font-size:clamp(30px,3.2vw,44px);line-height:1.1;letter-spacing:-0.03em">{{ L.title }}</h2>
+                <p style="margin:0;max-width:640px;font-size:17px;line-height:1.7;color:oklch(0.72 0.01 290);text-wrap:pretty">{{ L.prompt }}</p>
+                <div style="display:flex;flex-direction:column;max-width:640px;border-top:1px solid rgba(255,255,255,.08)">
+                  <div style="display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:oklch(0.86 0.006 290)"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:oklch(0.58 0.01 290);padding-top:3px">D1</span><span>Decision I made, and why.</span></div>
+                  <div style="display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:oklch(0.86 0.006 290)"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:oklch(0.58 0.01 290);padding-top:3px">D2</span><span>Trade-off I accepted, and what it cost.</span></div>
+                </div>
+              </section>
+            </sc-for>
+          </div>
+        </div>
+
+        <button onClick="{{ nextCase }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:40px 0;border:0;border-top:1px solid rgba(255,255,255,.08);background:none;color:oklch(0.96 0.006 290);font-family:inherit;cursor:pointer;text-align:left" style-hover="color:oklch(0.72 0.19 295)">
+          <span style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Next project</span><span style="font-size:clamp(28px,3.4vw,48px);font-weight:300;letter-spacing:-0.03em">{{ nextTitle }}</span></span>
+          <span style="font-size:32px">→</span>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;cycleSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:3.2,&quot;min&quot;:2,&quot;max&quot;:8,&quot;step&quot;:0.2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;headTilt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { i: 0, active: 2, screen: 'about', caseOpen: false, lens: 0 };
+  caseRef = React.createRef();
+  lensDefs = [
+    ['Problem Statement', 'Product Owner', 'What was broken, for whom, and why it mattered enough to fix now.'],
+    ['Product View', 'Product Manager', 'How you shaped the solution: research, scope, priorities and the calls you made on what not to build.'],
+    ['Engineering View', 'Tech Partner', 'The architecture and constraints you worked within, and how you kept product and engineering aligned.'],
+    ['Result', 'Owner of outcomes', 'What shipped and what changed: adoption, metrics, feedback.'],
+    ['Future Scope', 'Strategist', 'What you would do next, and what you learned that changes the roadmap.']
+  ];
+  rootRef = React.createRef();
+  stageRef = React.createRef();
+  charRef = React.createRef();
+  greetings = [
+    ['hello', 'English'], ['hola', 'Español'], ['bonjour', 'Français'], ['namaste', 'हिन्दी'],
+    ['ciao', 'Italiano'], ['nomoshkar', 'বাংলা'], ['olá', 'Português'], ['hallo', 'Deutsch'],
+    ['merhaba', 'Türkçe'], ['konnichiwa', '日本語']
+  ];
+  byes = [['bye!', 'English'], ['adiós', 'Español'], ['au revoir', 'Français'], ['ciao', 'Italiano'], ['tschüss', 'Deutsch'], ['sayonara', '日本語']];
+  projects = Array.from({ length: 10 }, (_, k) => ({
+    title: 'Project ' + String(k + 1).padStart(2, '0'), role: 'Product Owner', year: '2025', team: '—', video: '',
+    desc: 'Short description: the problem, what you shipped, and what changed.'
+  }));
+  componentDidMount() {
+    this.start();
+    this.onWheel = this.handleWheel.bind(this);
+    this.onKey = this.handleKey.bind(this);
+    this.rootRef.current?.addEventListener('wheel', this.onWheel, { passive: false });
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentDidUpdate(p) { if (p.cycleSeconds !== this.props.cycleSeconds) this.start(); }
+  componentWillUnmount() {
+    clearInterval(this.t);
+    this.rootRef.current?.removeEventListener('wheel', this.onWheel);
+    window.removeEventListener('keydown', this.onKey);
+  }
+  start() {
+    clearInterval(this.t);
+    const s = Math.max(2, this.props.cycleSeconds ?? 3.2);
+    this.t = setInterval(() => this.setState(st => ({ i: st.i + 1 })), s * 1000);
+  }
+  handleKey(e) {
+    if (this.state.caseOpen) { if (e.key === 'Escape') this.closeCase(); return; }
+    if (this.state.screen !== 'projects') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') this.goTo(this.state.active + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') this.goTo(this.state.active - 1);
+  }
+  handleWheel(e) {
+    if (this.state.screen !== 'projects' || this.state.caseOpen) return;
+    e.preventDefault();
+    const d = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    const now = performance.now();
+    this.acc = (now - (this.accAt || 0) > 200 ? 0 : this.acc || 0) + d;
+    this.accAt = now;
+    if (Math.abs(this.acc) > 40 && now - (this.stepAt || 0) > 420) {
+      this.stepAt = now; this.acc = 0;
+      this.goTo(this.state.active + Math.sign(d));
+    }
+  }
+  goTo(i) { this.setState({ active: i }); }
+  wrap(i) { const n = this.projects.length; return ((i % n) + n) % n; }
+  show(screen) { this.setState({ screen, caseOpen: false }); }
+  openCase = () => {
+    const st = this.stageRef.current, disc = st && st.firstElementChild;
+    let intro = { size: '300px', half: '-150px', dx: '0px', dy: '0px' };
+    if (disc) {
+      const r = disc.getBoundingClientRect(), root = this.rootRef.current.getBoundingClientRect();
+      const s = r.width;
+      intro = { size: s + 'px', half: (-s / 2) + 'px', dx: (r.left + s / 2 - (root.left + root.width / 2)) + 'px', dy: (r.top + r.height / 2 - (root.top + root.height / 2)) + 'px' };
+    }
+    this.setState({ caseOpen: true, lens: 0, intro });
+  };
+  closeCase = () => {
+    if (this.state.closing) return;
+    this.setState({ closing: true });
+    clearTimeout(this.ct);
+    this.ct = setTimeout(() => { this.setState({ caseOpen: false, closing: false, outro: true }); this.ct = setTimeout(() => this.setState({ outro: false }), 1250); }, 1000);
+  };
+  nextCase = () => { this.setState(s => ({ active: s.active + 1, lens: 0 })); if (this.caseRef.current) this.caseRef.current.scrollTop = 0; };
+  scrollToLens(i) { const c = this.caseRef.current; const el = c?.querySelector('[data-lens="' + i + '"]'); if (el) c.scrollTo({ top: el.getBoundingClientRect().top - c.getBoundingClientRect().top + c.scrollTop - 96, behavior: 'smooth' }); }
+  onCaseScroll = () => {
+    const c = this.caseRef.current; if (!c) return;
+    const mid = c.getBoundingClientRect().top + c.clientHeight * 0.35; let cur = 0;
+    c.querySelectorAll('[data-lens]').forEach((el, i) => { if (el.getBoundingClientRect().top < mid) cur = i; });
+    if (c.scrollTop + c.clientHeight >= c.scrollHeight - 4) cur = this.lensDefs.length - 1;
+    if (cur !== this.state.lens) this.setState({ lens: cur });
+  };
+  onMove = (e) => {
+    if (!this.charRef.current || !(this.props.headTilt ?? true)) return;
+    const r = this.rootRef.current.getBoundingClientRect();
+    const c = this.charRef.current.getBoundingClientRect();
+    const dx = (e.clientX - (c.left + c.width / 2)) / r.width;
+    const dy = (e.clientY - (c.top + c.height / 3)) / r.height;
+    this.charRef.current.style.transform = `translate(${dx * 24}px, ${dy * 14}px) rotate(${dx * 10}deg)`;
+  };
+  onLeave = () => { if (this.charRef.current) this.charRef.current.style.transform = ''; };
+  onStageMove = (e) => {
+    const el = this.stageRef.current; if (!el) return;
+    const r = el.getBoundingClientRect();
+    const s = parseFloat(getComputedStyle(el.firstElementChild).width) || 300;
+    const cx = r.left + r.width / 2, cy = r.top + r.height * 0.54;
+    const px = Math.max(-1, Math.min(1, (e.clientX - cx) / s)), py = Math.max(-1, Math.min(1, (e.clientY - cy) / s));
+    el.style.setProperty('--px', px.toFixed(3)); el.style.setProperty('--py', py.toFixed(3));
+    el.style.setProperty('--lift', (Math.hypot(e.clientX - cx, e.clientY - cy) < s / 2 ? s * 0.05 : 0) + 'px');
+  };
+  onStageLeave = () => { const el = this.stageRef.current; if (!el) return; el.style.setProperty('--px', '0'); el.style.setProperty('--py', '0'); el.style.setProperty('--lift', '0px'); };
+  makeBubble(word, lang, key) {
+    const h = React.createElement;
+    const fs = word.length > 8 ? 46 : 58;
+    return h('div', { style: { animation: 'floaty 4s ease-in-out infinite' } },
+      h('div', { style: { position: 'relative', background: 'oklch(0.6 0.22 295)', borderRadius: 28, padding: '6px 26px 14px' } },
+        h('svg', { key, width: 230, height: 76, viewBox: '0 0 250 84', style: { display: 'block', overflow: 'visible' } },
+          h('text', { x: 125, y: 60, textAnchor: 'middle', style: { fontFamily: "'Dancing Script', cursive", fontSize: fs, fontWeight: 600, stroke: '#fff', strokeWidth: 1.4, strokeDasharray: 700, strokeDashoffset: 700, fill: 'transparent', animation: 'write 1.8s cubic-bezier(.5,0,.3,1) forwards' } }, word)),
+        h('span', { key: 'l' + key, style: { position: 'relative', zIndex: 1, display: 'block', textAlign: 'center', marginTop: -4, fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#fff', animation: 'fadeUp .5s .2s both' } }, lang),
+        h('span', { style: { position: 'absolute', left: 64, bottom: -10, width: 22, height: 22, background: 'oklch(0.6 0.22 295)', transform: 'rotate(45deg)', borderRadius: 4 } })));
+  }
+  renderVals() {
+    const i = this.state.i, scr = this.state.screen;
+    const [word, lang] = this.greetings[i % this.greetings.length];
+    const [bw, bl] = this.byes[i % this.byes.length];
+    const a = this.state.active, n = this.projects.length;
+    const discs = this.projects.map((p, k) => {
+      let o = k - a; o -= n * Math.round(o / n); const near = Math.min(o, 2.2), yaw = 22 + o * -10, x = o * 1.02;
+      const t = `translate3d(calc(${x.toFixed(3)} * var(--s)), calc(${(-o * 0.24).toFixed(3)} * var(--s)), calc(${(near * 0.42).toFixed(3)} * var(--s))) rotateZ(-6deg) rotateY(${yaw}deg) rotateX(8deg)`;
+      const op = o < -2.5 ? Math.max(0, 1 - (-o - 2.5) / 1.2) : 1;
+      return {
+        transform: t, z: 100 + o * 10, op: (this.state.caseOpen && !this.state.closing) ? 0 : op, vis: (o < -4 || o > 2.8 || op <= 0) ? 'hidden' : 'visible',
+        glint: (yaw * 3 + x * 40).toFixed(1) + 'deg', roll: (o * 110) + 'deg',
+        tilt: o === 0 ? 'translateZ(var(--lift)) rotateX(calc(var(--py) * -12deg)) rotateY(calc(var(--px) * 12deg))' : 'none',
+        spin: o === 0 ? 'running' : 'paused', inactive: o !== 0, isActive: o === 0,
+        slotId: 'project-disc-' + (k + 1), ph: 'Project ' + (k + 1) + ' screenshot',
+        label: 'Show ' + p.title, go: () => this.goTo(a + o)
+      };
+    });
+    const nav = [['about', 'About'], ['projects', 'Projects'], ['contact', 'Contact']].map(([id, label]) => ({
+      label, go: () => this.show(id),
+      color: scr === id ? 'oklch(0.96 0.006 290)' : 'oklch(0.66 0.01 290)', dot: scr === id ? 1 : 0
+    }));
+    return {
+      caseRef: this.caseRef, caseOpen: this.state.caseOpen, intro: { ...(this.state.intro || { size: '300px', half: '-150px', dx: '0px', dy: '0px' }), slot: 'project-disc-' + (this.wrap(a) + 1) }, closing: !!this.state.closing, outro: !!this.state.outro, openCase: this.openCase, closeCase: this.closeCase, nextCase: this.nextCase, onCaseScroll: this.onCaseScroll,
+      hasVideo: !!this.projects[this.wrap(a)].video, noVideo: !this.projects[this.wrap(a)].video, nextTitle: this.projects[this.wrap(a + 1)].title,
+      lenses: this.lensDefs.map(([title, hat, prompt], k) => ({ idx: k, num: String(k + 1).padStart(2, '0'), title, hat, prompt, go: () => this.scrollToLens(k),
+        bg: this.state.lens === k ? 'rgba(255,255,255,.08)' : 'transparent', color: this.state.lens === k ? 'oklch(0.96 0.006 290)' : 'oklch(0.62 0.01 290)', numColor: this.state.lens === k ? 'oklch(0.72 0.19 295)' : 'oklch(0.5 0.01 290)' })),
+      rootRef: this.rootRef, charRef: this.charRef, stageRef: this.stageRef, onStageMove: this.onStageMove, onStageLeave: this.onStageLeave, onMove: this.onMove, onLeave: this.onLeave,
+      navItems: nav, isAbout: scr === 'about', isProjects: scr === 'projects', isContact: scr === 'contact',
+      goAbout: () => this.show('about'), goProjects: () => this.show('projects'), goContact: () => this.show('contact'),
+      bubble: this.makeBubble(word, lang, 'g' + i), byeBubble: this.makeBubble(bw, bl, 'b' + i),
+      discs, cur: this.projects[this.wrap(a)], curNum: String(this.wrap(a) + 1).padStart(2, '0'), total: String(n).padStart(2, '0'),
+      atStart: false, atEnd: false,
+      prev: () => this.goTo(a - 1), next: () => this.goTo(a + 1)
+    };
+  }
+}
+</script>
+</body>
+</html>

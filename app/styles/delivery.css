@@ -1,0 +1,76 @@
+.land-runway {
+  position: relative;
+  height: calc(max(100vh, 560px) * 3); /* 1 sticky screen + 1.2 landing + 0.8 hold (HOLD_VH) */
+}
+.land-panel {
+  position: sticky;
+  top: 0;
+  height: max(100vh, 560px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 96px clamp(20px, 5vw, 64px) 32px;
+}
+.land-head,
+.land-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+}
+.land-head {
+  gap: 10px;
+}
+.land-head h2 {
+  margin: 0;
+  font-weight: 300;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.land-foot {
+  gap: 18px;
+}
+.land-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.land-name {
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.delivery-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 4; pointer-events: none; }
+.delivery-spiral { position: fixed; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.delivery-sp { position: absolute; left: 0; top: 0; aspect-ratio: 1 / 1; opacity: 0; color: var(--fg); }
+.delivery-plane { position: fixed; left: 0; top: 0; width: 46px; height: 46px; margin: -23px 0 0 -23px; z-index: 4; pointer-events: none; opacity: 0; }
+
+.stage[data-moving] .disc { transition: none; }
+.stage[data-moving] .disc-open { opacity: 0; pointer-events: none; }
+
+.disc-burnspin { position: absolute; inset: 0; transform: rotate(var(--spin, 0deg)); }
+.disc-blank { position: absolute; inset: 0; pointer-events: none; opacity: var(--blank, 0);
+  background: repeating-radial-gradient(circle, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+    conic-gradient(from 0deg, #c9cdd3, #f4f5f7 12%, #9ea4ac 25%, #e8eaee 37%, #b5bac2 50%, #f6f7f9 62%, #a2a8b0 75%, #e3e5e9 87%, #c9cdd3);
+  -webkit-mask: radial-gradient(circle closest-side, transparent calc(var(--burn, 0%) * 2), #000 calc(var(--burn, 0%) * 2 + 0.6%));
+  mask: radial-gradient(circle closest-side, transparent calc(var(--burn, 0%) * 2), #000 calc(var(--burn, 0%) * 2 + 0.6%)); }
+
+/* Burnt grooves: between the hub (35% of the radius) and the laser ring (2 × --burn, see .disc-blank). */
+.disc-burnt { position: absolute; inset: 0; pointer-events: none; opacity: var(--burnt, 0);
+  background: repeating-radial-gradient(circle, rgba(18, 10, 36, 0.55) 0 1px, rgba(44, 24, 78, 0.42) 1px 2.4px);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 35%, #000 35.5%, #000 calc(var(--burn, 0%) * 2), transparent calc(var(--burn, 0%) * 2 + 0.6%));
+  mask: radial-gradient(circle closest-side, transparent 35%, #000 35.5%, #000 calc(var(--burn, 0%) * 2), transparent calc(var(--burn, 0%) * 2 + 0.6%)); }
+
+.burn-hubglow { position: absolute; left: 36%; top: 36%; width: 28%; height: 28%; border-radius: 50%; pointer-events: none; opacity: 0; transform: translateZ(3px);
+  background: radial-gradient(circle closest-side, var(--accent), transparent 75%); z-index: 200; }
+.burn-laser { position: absolute; left: 32.5%; top: 32.5%; width: 35%; height: 35%; border-radius: 50%; pointer-events: none; opacity: 0; transform: translateZ(3px);
+  border: 1.5px solid var(--accent); box-shadow: 0 0 14px var(--accent), 0 0 4px rgba(255, 255, 255, 0.9), inset 0 0 10px var(--accent); z-index: 200; }
+.burn-shimmer { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0; mix-blend-mode: screen; z-index: 200;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.85) 20deg, transparent 50deg, transparent 180deg, rgba(200, 180, 255, 0.6) 200deg, transparent 230deg); }
+.burn-label { position: absolute; left: 50%; top: calc(100% + 18px); transform: translateX(-50%); opacity: 0; pointer-events: none; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }

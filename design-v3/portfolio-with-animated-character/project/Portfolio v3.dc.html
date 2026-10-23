@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=Dancing+Script:wght@600&family=Permanent+Marker&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;background:oklch(0.13 0.008 290);color:oklch(0.96 0.006 290);-webkit-font-smoothing:antialiased}
+a{color:oklch(0.96 0.006 290);text-decoration:none}
+a:hover{color:oklch(0.72 0.19 295)}
+@keyframes write{0%{stroke-dashoffset:700;fill:transparent}70%{stroke-dashoffset:0;fill:transparent}100%{stroke-dashoffset:0;fill:#fff}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes reveal{from{clip-path:circle(0% at 50% 54%)}to{clip-path:circle(150% at 50% 54%)}}
+@keyframes rise{from{transform:translateY(110%)}to{transform:none}}
+@keyframes unreveal{from{clip-path:circle(150% at 50% 54%)}to{clip-path:circle(0% at 50% 54%)}}
+@keyframes softIn{from{opacity:0;backdrop-filter:blur(0)}to{opacity:1;backdrop-filter:blur(12px)}}
+@keyframes softOut{from{opacity:1}to{opacity:0}}
+@keyframes settle{from{opacity:0;transform:scale(1.03);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes bgIn{from{background-color:transparent}to{background-color:oklch(0.13 0.008 290)}}
+@keyframes glowIn{0%{opacity:0;transform:scale(.6)}60%{opacity:1}100%{opacity:.8;transform:scale(1.1)}}
+@keyframes liftOff{0%{transform:translate(var(--dx),var(--dy)) rotateZ(-6deg) rotateY(22deg) rotateX(8deg) translateZ(0);opacity:1}24%{transform:translate(var(--dx),calc(var(--dy) - 24px)) rotateZ(-6deg) rotateY(14deg) rotateX(14deg) translateZ(170px);opacity:1}55%{transform:translate(0,-30px) rotateZ(0) rotateY(0) rotateX(0) translateZ(260px);opacity:1}78%{transform:translate(0,-30px) rotateY(180deg) translateZ(300px);opacity:1}100%{transform:translate(0,-40px) rotateY(360deg) translateZ(520px);opacity:0;filter:blur(6px)}}
+@keyframes shadowDrop{0%{opacity:1;filter:blur(0)}30%{opacity:.6;filter:blur(18px)}100%{opacity:0;filter:blur(30px)}}
+@keyframes sheenSweep{from{transform:rotate(0)}to{transform:rotate(-540deg)}}
+@keyframes wobble{0%,100%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.05)}75%{transform:rotate(4deg) scale(1.05)}}
+@keyframes shipGo{0%{transform:none}10%{transform:translateX(-0.05em)}44%{transform:translateX(110vw) skewX(-16deg);filter:blur(2px)}44.01%{transform:translateX(-110vw) skewX(-16deg);filter:blur(2px)}82%{transform:translateX(0.03em) skewX(2deg);filter:none}100%{transform:none}}
+@keyframes streakGo{0%,8%{opacity:0;transform:scaleX(.2)}20%{opacity:1;transform:scaleX(1)}44%{opacity:.8;transform:scaleX(1.7)}60%{opacity:.8;transform:scaleX(1)}82%,100%{opacity:0;transform:scaleX(.2)}}
+@keyframes cueDrop{0%{transform:translateY(-12px);opacity:0}25%{opacity:1}100%{transform:translateY(40px);opacity:0}}
+@keyframes popIn{from{opacity:0;transform:scale(.6) rotate(-9deg)}to{opacity:1;transform:scale(1) rotate(-2deg)}}
+@keyframes planeGo{0%{transform:none}10%{transform:translate(-6px,4px) rotate(8deg)}44%{transform:translate(110vw,-60px) rotate(-14deg)}44.01%{transform:translate(-110vw,-40px) rotate(-6deg)}82%{transform:translate(4px,-2px)}100%{transform:none}}
+@keyframes sleeveFold{0%{transform:translateY(-120%) rotate(-4deg);opacity:0}25%{opacity:1}55%{transform:translateY(0) rotate(0);opacity:1}78%{transform:scale(.5,.25) rotate(-12deg);opacity:1}100%{transform:scale(.12) rotate(-30deg);opacity:0}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+@keyframes pulseRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+@keyframes wave{0%,100%{transform:rotate(0)}15%{transform:rotate(-7deg)}30%{transform:rotate(6deg)}45%{transform:rotate(-5deg)}60%{transform:rotate(3deg)}75%{transform:rotate(0)}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative;height:100vh;min-height:560px;overflow:hidden;font-family:'Geist',system-ui,sans-serif;background:oklch(0.13 0.008 290);display:flex;flex-direction:column;--accent:{{ accent }};--accent2:color-mix(in oklch, var(--accent, oklch(0.72 0.19 295)) 84%, black)">
+
+  <nav style="position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px clamp(20px,5vw,64px);max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto">
+    <button onClick="{{ goAbout }}" style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:500;letter-spacing:-0.01em;background:none;border:0;padding:0;color:oklch(0.96 0.006 290);cursor:pointer;font-family:inherit">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--accent, oklch(0.72 0.19 295))"></span>
+      <span>Debashish</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:clamp(14px,3vw,36px);font-size:14px">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="2">
+        <button onClick="{{ n.go }}" style="position:relative;background:none;border:0;padding:6px 0;cursor:pointer;font-family:inherit;font-size:14px;color:{{ n.color }}" style-hover="color:oklch(0.96 0.006 290)">
+          <span>{{ n.label }}</span>
+          <span style="position:absolute;left:50%;bottom:-4px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent, oklch(0.72 0.19 295));opacity:{{ n.dot }};transition:opacity .2s"></span>
+        </button>
+      </sc-for>
+      <a href="#cv" download="Debashish-CV.pdf" style="display:flex;align-items:center;height:38px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.16);font-size:13px;color:oklch(0.96 0.006 290);white-space:nowrap;transition:border-color .2s, background .2s" style-hover="border-color:var(--accent, oklch(0.72 0.19 295));background:rgba(255,255,255,.04);color:oklch(0.96 0.006 290)">{{ cvLabel }}</a>
+    </div>
+  </nav>
+
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ scrollerRef }}" onScroll="{{ onSDScroll }}" onWheel="{{ cancelAuto }}" onTouchStart="{{ cancelAuto }}" style="position:absolute;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:none">
+    <div style="position:relative;height:calc(max(100vh,560px) * 1.6)">
+    <main ref="{{ heroRef }}" onPointerMove="{{ onHeroMove }}" onPointerLeave="{{ onHeroLeave }}" onPointerDown="{{ onHeroDown }}" data-screen-label="Hero" style="position:sticky;top:0;height:max(100vh,560px);box-sizing:border-box;padding-top:86px;overflow:hidden;display:flex;flex-direction:column;width:100%;cursor:{{ heroCursor }}">
+      <div ref="{{ doodleLayerRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:3;pointer-events:none;--db:{{ doodleBase }}">
+        <sc-for list="{{ doodles }}" as="dd" hint-placeholder-count="7">
+          <div data-doodle="1" onPointerEnter="{{ dd.enter }}" onPointerLeave="{{ dd.leave }}" onClick="{{ dd.tap }}" style="pointer-events:{{ doodlePE }};position:absolute;left:{{ dd.x }};top:{{ dd.y }};width:{{ dd.w }};aspect-ratio:1/1;transform:translate(-50%,-50%) rotate({{ dd.r }});opacity:var(--db,0.08);color:oklch(0.96 0.006 290);transition:opacity .35s ease">
+            <div data-wob="1" style="width:100%;height:100%">{{ dd.svg }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div ref="{{ spotRef }}" aria-hidden="true" style="position:absolute;left:0;top:0;z-index:1;width:{{ spotSize }};height:{{ spotSize }};border-radius:50%;pointer-events:none;opacity:0;transition:opacity .35s ease;background:radial-gradient(circle closest-side, rgba(255,255,255,.12), rgba(255,255,255,.045) 55%, transparent 100%);display:flex;align-items:center;justify-content:center">
+        </div>
+      <canvas ref="{{ inkRef }}" aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:4;pointer-events:none"></canvas>
+      <div style="position:absolute;inset:0;z-index:8;pointer-events:none">
+        <sc-for list="{{ doodles }}" as="dd" hint-placeholder-count="0">
+          <sc-if value="{{ dd.open }}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="position:absolute;left:{{ dd.x }};top:{{ dd.y }};transform:{{ dd.popTf }};width:max-content;max-width:min(250px,46vw)">
+              <div style="transform-origin:{{ dd.popOrigin }};transform:{{ popTilt }};animation:{{ popAnim }};background:oklch(0.16 0.01 290);border:1px solid var(--accent, oklch(0.72 0.19 295));border-radius:12px;padding:12px 14px;box-shadow:0 18px 40px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;gap:6px">
+                <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent, oklch(0.72 0.19 295))">Noticed</span>
+                <span style="font-size:14px;line-height:1.45;color:oklch(0.96 0.006 290);text-wrap:pretty">{{ dd.note }}</span>
+              </div>
+            </div>
+          </sc-if>
+        </sc-for>
+      </div>
+      <div ref="{{ cursorRef }}" aria-hidden="true" style="position:absolute;left:0;top:0;z-index:9;pointer-events:none;opacity:0;transition:opacity .2s ease">
+        <sc-if value="{{ isTorch }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:-4px;top:-4px;width:40px;height:40px">{{ torchIcon }}</div></sc-if>
+        <sc-if value="{{ isPencil }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:-6px;top:-26px;width:32px;height:32px">{{ pencilIcon }}</div></sc-if>
+        <sc-if value="{{ isPlane }}" hint-placeholder-val="{{ false }}"><div ref="{{ planeRef }}" style="position:absolute;left:-15px;top:-15px;width:30px;height:30px">{{ planeIcon }}</div></sc-if>
+      </div>
+
+      <div ref="{{ heroContentRef }}" style="position:relative;z-index:2;flex:1;display:flex;align-items:center;max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto;padding:16px clamp(20px,5vw,64px) 96px;transform-origin:50% 50%;pointer-events:none">
+        <div style="pointer-events:auto;display:flex;flex-direction:column;gap:clamp(20px,3.4vh,32px);animation:heroIn .9s cubic-bezier(.2,.7,.2,1) both">
+          <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent, oklch(0.72 0.19 295))">Product Owner</div>
+          <h1 aria-label="Spot it. Shape it. Ship it." onPointerDown="{{ h1Down }}" onPointerUp="{{ h1Up }}" onPointerCancel="{{ h1Up }}" style="touch-action:none;margin:0;font-weight:300;font-size:clamp(48px,min(9vw,13vh),140px);line-height:1;letter-spacing:-0.03em;display:flex;flex-direction:column;align-items:flex-start;color:oklch(0.96 0.006 290)">
+            <span style="display:flex;align-items:baseline">
+              <span onPointerEnter="{{ spotEnter }}" onPointerDown="{{ ptDown }}" onClick="{{ spotTap }}" style="cursor:{{ verbCursor }}">Spot it</span><span style="color:var(--accent, oklch(0.72 0.19 295))">.</span>
+            </span>
+            <span style="display:flex;align-items:baseline">
+              <span onPointerEnter="{{ shapeEnter }}" onPointerLeave="{{ shapeLeave }}" onPointerDown="{{ ptDown }}" onClick="{{ shapeTap }}" style="position:relative;display:inline-flex;cursor:{{ verbCursor }}">
+                <sc-for list="{{ shapeLetters }}" as="l" hint-placeholder-count="8"><span aria-hidden="true" style="display:inline-block;transform-origin:50% 100%;transition:transform .6s cubic-bezier(.34,1.56,.64,1), color .3s ease;transform:{{ l.tf }};color:{{ l.color }};-webkit-text-stroke:{{ l.stroke }}">{{ l.ch }}</span></sc-for>
+                <span aria-hidden="true" style="position:absolute;inset:0.04em -0.12em -0.04em -0.12em;pointer-events:none;opacity:{{ shapeOp }};transform:scale({{ shapeScale }});transition:opacity .25s ease, transform .5s cubic-bezier(.34,1.56,.64,1)">
+                  <span style="position:absolute;left:-0.35em;right:-0.35em;top:24%;border-top:1px dashed color-mix(in oklch, var(--accent, oklch(0.72 0.19 295)) 55%, transparent)"></span>
+                  <span style="position:absolute;left:-0.35em;right:-0.35em;top:46%;border-top:1px dashed color-mix(in oklch, var(--accent, oklch(0.72 0.19 295)) 40%, transparent)"></span>
+                  <span style="position:absolute;left:-0.35em;right:-0.35em;top:80%;border-top:1px solid color-mix(in oklch, var(--accent, oklch(0.72 0.19 295)) 70%, transparent)"></span>
+                  <span style="position:absolute;inset:0;border:1px solid var(--accent, oklch(0.72 0.19 295))"></span>
+                  <span style="position:absolute;left:0;top:0;width:8px;height:8px;transform:translate(-50%,-50%);background:oklch(0.13 0.008 290);border:1px solid var(--accent, oklch(0.72 0.19 295))"></span>
+                  <span style="position:absolute;right:0;top:0;width:8px;height:8px;transform:translate(50%,-50%);background:oklch(0.13 0.008 290);border:1px solid var(--accent, oklch(0.72 0.19 295))"></span>
+                  <span style="position:absolute;left:0;bottom:0;width:8px;height:8px;transform:translate(-50%,50%);background:oklch(0.13 0.008 290);border:1px solid var(--accent, oklch(0.72 0.19 295))"></span>
+                  <span style="position:absolute;right:0;bottom:0;width:8px;height:8px;transform:translate(50%,50%);background:oklch(0.13 0.008 290);border:1px solid var(--accent, oklch(0.72 0.19 295))"></span>
+                  <span style="position:absolute;left:0;top:-22px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--accent, oklch(0.72 0.19 295));white-space:nowrap">sketch_v0.1</span>
+                </span>
+              </span><span style="color:var(--accent, oklch(0.72 0.19 295))">.</span>
+            </span>
+            <span onPointerEnter="{{ shipLineEnter }}" onPointerLeave="{{ shipLineLeave }}" style="display:flex;align-items:baseline">
+              <span ref="{{ shipRef }}" onPointerDown="{{ ptDown }}" onClick="{{ shipTap }}" style="position:relative;display:inline-block;cursor:{{ verbCursor }}">Ship it<span ref="{{ streakRef }}" aria-hidden="true" style="position:absolute;right:100%;top:34%;width:1.8em;height:36%;opacity:0;transform-origin:100% 50%;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between">
+                  <span style="height:2px;margin-left:30%;background:linear-gradient(to right, transparent, var(--accent, oklch(0.72 0.19 295)))"></span>
+                  <span style="height:2px;background:linear-gradient(to right, transparent, oklch(0.96 0.006 290 / 0.7))"></span>
+                  <span style="height:2px;margin-left:50%;background:linear-gradient(to right, transparent, var(--accent, oklch(0.72 0.19 295)))"></span>
+                </span></span><span style="color:var(--accent, oklch(0.72 0.19 295))">.</span>
+            </span>
+          </h1>
+          <p style="margin:0;max-width:440px;font-size:16px;line-height:1.6;color:oklch(0.74 0.01 290);text-wrap:pretty">From an everyday annoyance to a product people want, with the customer, the tech and the numbers in view.</p>
+          <div onPointerEnter="{{ spotOff }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;cursor:auto">
+            <button onClick="{{ goShipped }}" style="display:flex;align-items:center;gap:12px;height:52px;padding:0 26px;border-radius:999px;border:0;background:var(--accent2, oklch(0.62 0.21 295));color:#fff;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;transition:transform .2s, filter .2s" style-hover="filter:brightness(1.12);transform:translateY(-2px)">
+              <span>See what I've shipped</span><span>→</span>
+            </button>
+            <button onClick="{{ goContact }}" style="background:none;border:0;padding:6px 0;font-family:inherit;font-size:15px;color:oklch(0.86 0.01 290);cursor:pointer;border-bottom:1px solid oklch(0.4 0.02 290)" style-hover="color:oklch(0.96 0.006 290);border-bottom-color:var(--accent, oklch(0.72 0.19 295))">Say hello</button>
+          </div>
+        </div>
+      </div>
+
+      <div ref="{{ cueRef }}" aria-hidden="true" style="position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none">
+        <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:oklch(0.6 0.01 290)">Scroll</span>
+        <span style="position:relative;width:1px;height:40px;background:oklch(0.28 0.01 290);overflow:hidden">
+          <span style="position:absolute;left:0;top:0;width:1px;height:14px;background:var(--accent, oklch(0.72 0.19 295));animation:cueDrop 1.8s ease-in-out infinite"></span>
+        </span>
+      </div>
+    </main>
+    </div>
+    <section data-screen-label="Projects landing" style="position:relative;height:calc(max(100vh,560px) * 2.2)">
+      <div ref="{{ landPanelRef }}" style="position:sticky;top:0;height:max(100vh,560px);overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:96px clamp(20px,5vw,64px) 32px;box-sizing:border-box">
+        <div data-reveal="1" style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;opacity:0;position:relative;z-index:3">
+          <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent, oklch(0.72 0.19 295))">Shipped</div>
+          <h2 style="margin:0;font-weight:300;font-size:clamp(30px,3.4vw,46px);line-height:1.1;letter-spacing:-0.03em">Projects</h2>
+        </div>
+        <div ref="{{ stageRef }}" style="flex:1;position:relative;width:100%;min-height:240px;--s:clamp(170px,min(38vh,28vw),340px)">
+          <div ref="{{ landCenterRef }}" style="position:absolute;left:50%;top:54%;width:var(--s);aspect-ratio:1/1;transform:translate(-50%,-50%);perspective:calc(var(--s) * 3.2);transform-style:preserve-3d">
+            <sc-for list="{{ landDiscs }}" as="d" hint-placeholder-count="1">
+              <div data-ld="{{ d.k }}" style="position:absolute;inset:0;transform-style:preserve-3d;opacity:0">
+                <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;transform:translate3d(0,7%,-18px) scale(.97);background:radial-gradient(circle closest-side, transparent 30%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.2) 80%, transparent 100%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-4px);background:linear-gradient(160deg,#d7d9dc,#8d9196 55%,#c4c7cb);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)">
+                  <div data-spin="1" style="position:absolute;inset:0;background:repeating-radial-gradient(circle, rgba(0,0,0,.05) 0 1px, transparent 1px 3px), conic-gradient(from 0deg, #c9cdd3, #f4f5f7 12%, #9ea4ac 25%, #e8eaee 37%, #b5bac2 50%, #f6f7f9 62%, #a2a8b0 75%, #e3e5e9 87%, #c9cdd3)"></div>
+                  <div data-burnt="1" style="position:absolute;inset:0;opacity:0;background:repeating-radial-gradient(circle, rgba(18,10,36,.55) 0 1px, rgba(44,24,78,.42) 1px 2.4px)"></div>
+                  <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.7;background:conic-gradient(from 120deg, transparent 0deg, rgba(255,255,255,.5) 16deg, transparent 38deg, transparent 140deg, rgba(150,215,255,.38) 168deg, rgba(255,170,225,.38) 186deg, rgba(255,236,170,.3) 200deg, transparent 224deg)"></div>
+                  <div style="position:absolute;left:32%;top:32%;width:36%;height:36%;border-radius:50%;pointer-events:none;border:3px solid rgba(255,255,255,.95);box-shadow:inset 0 0 0 8px rgba(240,242,245,.55), inset 0 0 0 9px rgba(255,255,255,.9);box-sizing:border-box"></div>
+                  <div data-lab="1" style="position:absolute;left:0;right:0;top:20%;text-align:center;font-size:calc(var(--s) * 0.062);font-weight:500;letter-spacing:0.01em;color:#25252d;pointer-events:none">{{ d.label }}</div>
+                </div>
+                <sc-if value="{{ d.inactive }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ d.go }}" aria-label="{{ d.aria }}" style="position:absolute;inset:0;border-radius:50%;background:transparent;border:0;cursor:pointer;padding:0"></button>
+                </sc-if>
+                <sc-if value="{{ d.isActive }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ openCase }}" aria-label="Open project" style="position:absolute;inset:0;border-radius:50%;background:transparent;border:0;cursor:pointer;padding:0;transform:translateZ(6px)"></button>
+                </sc-if>
+              </div>
+            </sc-for>
+            <div ref="{{ hubGlowRef }}" style="position:absolute;left:36%;top:36%;width:28%;height:28%;border-radius:50%;pointer-events:none;opacity:0;transform:translateZ(3px);background:radial-gradient(circle closest-side, var(--accent, oklch(0.72 0.19 295)), transparent 75%)"></div>
+            <div ref="{{ laserRef }}" style="position:absolute;left:32.5%;top:32.5%;width:35%;height:35%;border-radius:50%;pointer-events:none;opacity:0;box-sizing:border-box;transform:translateZ(3px);border:1.5px solid var(--accent, oklch(0.72 0.19 295));box-shadow:0 0 14px var(--accent, oklch(0.72 0.19 295)), 0 0 4px rgba(255,255,255,.9), inset 0 0 10px var(--accent, oklch(0.72 0.19 295))"></div>
+            <div ref="{{ shimmerRef }}" style="position:absolute;inset:0;border-radius:50%;pointer-events:none;opacity:0;mix-blend-mode:screen;-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);background:conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,.85) 20deg, transparent 50deg, transparent 180deg, rgba(200,180,255,.6) 200deg, transparent 230deg)"></div>
+            <div ref="{{ burnedRef }}" style="position:absolute;left:50%;top:calc(100% + 18px);transform:translateX(-50%);opacity:0;pointer-events:none;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent, oklch(0.72 0.19 295));white-space:nowrap">Burned</div>
+          </div>
+        </div>
+        <div data-reveal="1" style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;opacity:0;position:relative;z-index:3">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.14em;color:oklch(0.6 0.01 290)"><span style="color:var(--accent, oklch(0.72 0.19 295))">{{ curNum }}</span> / {{ total }}</div>
+            <div style="font-size:22px;font-weight:400;letter-spacing:-0.02em">{{ cur.title }}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px">
+            <button onClick="{{ prev }}" aria-label="Previous project" style="width:44px;height:44px;border-radius:50%;border:1px solid oklch(0.32 0.015 290);background:transparent;color:oklch(0.9 0.006 290);font-size:16px;cursor:pointer;font-family:inherit" style-hover="border-color:var(--accent, oklch(0.72 0.19 295))">←</button>
+            <button onClick="{{ openCase }}" style="display:flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:oklch(0.96 0.006 290);font-family:inherit;font-size:14px;cursor:pointer" style-hover="background:var(--accent2, oklch(0.62 0.21 295));border-color:var(--accent2, oklch(0.62 0.21 295))"><span>View case study</span><span>→</span></button>
+            <button onClick="{{ next }}" aria-label="Next project" style="width:44px;height:44px;border-radius:50%;border:1px solid oklch(0.32 0.015 290);background:transparent;color:oklch(0.9 0.006 290);font-size:16px;cursor:pointer;font-family:inherit" style-hover="border-color:var(--accent, oklch(0.72 0.19 295))">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section ref="{{ footRef }}" data-screen-label="Footer" style="position:relative;min-height:max(100vh,560px);display:flex;flex-direction:column;box-sizing:border-box;padding:clamp(120px,20vh,220px) clamp(20px,5vw,64px) 0;max-width:1280px;margin:0 auto">
+      <div style="flex:1;display:flex;flex-direction:column;gap:clamp(48px,8vh,80px)">
+        <div style="display:flex;flex-direction:column;gap:20px;max-width:780px">
+          <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent, oklch(0.72 0.19 295))">Your turn</div>
+          <h2 style="margin:0;font-weight:300;font-size:clamp(40px,6vw,88px);line-height:1.04;letter-spacing:-0.03em;text-wrap:balance">Got something bugging you? Let's ship it.</h2>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:clamp(48px,7vw,112px)">
+          <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:22px">
+            <div style="position:relative;width:{{ footDiscW }};aspect-ratio:1/1;perspective:900px;transition:width .4s ease">
+              <div ref="{{ footDiscRef }}" style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.3,.5,1);transform:{{ footTilt }}">
+                <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;transform:translate3d(0,6%,-18px) scale(.97);background:radial-gradient(circle closest-side, transparent 30%, rgba(0,0,0,.5) 55%, rgba(0,0,0,.2) 80%, transparent 100%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-4px);background:linear-gradient(160deg,#d7d9dc,#8d9196 55%,#c4c7cb);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)">
+                  <div style="position:absolute;inset:0;animation:spin 40s linear infinite;background:repeating-radial-gradient(circle, rgba(0,0,0,.05) 0 1px, transparent 1px 3px), conic-gradient(from 0deg, #c9cdd3, #f4f5f7 12%, #9ea4ac 25%, #e8eaee 37%, #b5bac2 50%, #f6f7f9 62%, #a2a8b0 75%, #e3e5e9 87%, #c9cdd3)"></div>
+                  <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.7;background:conic-gradient(from 120deg, transparent 0deg, rgba(255,255,255,.5) 16deg, transparent 38deg, transparent 140deg, rgba(150,215,255,.38) 168deg, rgba(255,170,225,.38) 186deg, rgba(255,236,170,.3) 200deg, transparent 224deg)"></div>
+                  <div style="position:absolute;left:32%;top:32%;width:36%;height:36%;border-radius:50%;pointer-events:none;border:3px solid rgba(255,255,255,.95);box-shadow:inset 0 0 0 8px rgba(240,242,245,.55), inset 0 0 0 9px rgba(255,255,255,.9);box-sizing:border-box"></div>
+                </div>
+                <div style="position:absolute;inset:0;transform:translateZ(1px);pointer-events:none">{{ footLabel }}</div>
+              </div>
+              <sc-if value="{{ footSleeve }}" hint-placeholder-val="{{ false }}">
+                <div aria-hidden="true" style="position:absolute;inset:-5%;z-index:3;pointer-events:none;animation:sleeveFold .8s cubic-bezier(.5,0,.3,1) both">
+                  <div style="position:absolute;inset:0;border-radius:6px;background:oklch(0.93 0.012 85);box-shadow:0 20px 40px -12px rgba(0,0,0,.6)"></div>
+                  <div style="position:absolute;left:30%;top:30%;width:40%;height:40%;border-radius:50%;border:1px solid rgba(0,0,0,.18)"></div>
+                  <div style="position:absolute;left:8%;right:8%;bottom:10%;height:1px;background:rgba(0,0,0,.15)"></div>
+                </div>
+              </sc-if>
+              <button onClick="{{ focusIdea }}" aria-label="Write your idea on the disc" style="position:absolute;inset:0;z-index:2;border-radius:50%;background:transparent;border:0;padding:0;cursor:{{ markerCursor }}"></button>
+              <input ref="{{ footInputRef }}" value="{{ idea }}" onChange="{{ onIdea }}" onFocus="{{ onIdeaFocus }}" onBlur="{{ onIdeaBlur }}" onKeyDown="{{ onIdeaKey }}" maxLength="80" aria-label="Write your idea" placeholder="Write your idea…" style="position:absolute;left:50%;top:60%;width:2px;height:2px;padding:0;border:0;opacity:0;font-size:16px;pointer-events:none">
+              <div aria-hidden="true" style="position:absolute;right:-20%;bottom:-4%;width:48%;transform:rotate(-28deg);pointer-events:none;color:oklch(0.86 0.006 290)">{{ penSvg }}</div>
+            </div>
+            <div style="min-height:46px;display:flex;align-items:center;justify-content:center">
+              <sc-if value="{{ hasIdea }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ footShip }}" style="display:flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;border:0;background:var(--accent2, oklch(0.62 0.21 295));color:#fff;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;animation:fadeUp .35s ease both;transition:filter .2s, transform .2s" style-hover="filter:brightness(1.12);transform:translateY(-2px)"><span>Ship it</span><span>→</span></button>
+              </sc-if>
+              <sc-if value="{{ noIdea }}" hint-placeholder-val="{{ true }}">
+                <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Click the disc to write</span>
+              </sc-if>
+              <sc-if value="{{ sentNote }}" hint-placeholder-val="{{ false }}">
+                <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent, oklch(0.72 0.19 295));animation:fadeUp .35s ease both">Opening your mail app ✓</span>
+              </sc-if>
+            </div>
+          </div>
+          <div style="flex:1 1 300px;display:flex;flex-direction:column;gap:44px">
+            <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:oklch(0.62 0.01 290)">Hiring?</span>
+              <a href="#cv" download="Debashish-CV.pdf" style="display:flex;align-items:center;height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:15px;color:oklch(0.96 0.006 290);transition:border-color .2s, background .2s" style-hover="border-color:var(--accent, oklch(0.72 0.19 295));background:rgba(255,255,255,.04);color:oklch(0.96 0.006 290)">Download CV ↓</a>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:oklch(0.62 0.01 290)">Just say hi</span>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px">
+                <button onClick="{{ copyEmail }}" aria-label="Copy email address" style="border:0;padding:0 0 6px;font-family:inherit;font-weight:300;font-size:clamp(26px,3.2vw,44px);letter-spacing:-0.02em;color:oklch(0.96 0.006 290);cursor:pointer;background-color:transparent;background-image:linear-gradient(var(--accent, oklch(0.72 0.19 295)), var(--accent, oklch(0.72 0.19 295)));background-repeat:no-repeat;background-position:0 100%;background-size:0% 1.5px;transition:background-size .45s cubic-bezier(.2,.7,.2,1)" style-hover="background-size:100% 1.5px">hello@debashish.com</button>
+                <sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}">
+                  <span style="padding:5px 10px;border-radius:999px;border:1px solid var(--accent, oklch(0.72 0.19 295));font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--accent, oklch(0.72 0.19 295));animation:popIn .4s cubic-bezier(.34,1.56,.64,1) both">Copied ✓</span>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:clamp(64px,10vh,120px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;padding:22px 0 28px;border-top:1px solid oklch(0.22 0.01 290);font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:oklch(0.6 0.01 290)">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
+          <span>© 2026 Debashish</span><span>·</span>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener" style="color:oklch(0.6 0.01 290)" style-hover="color:oklch(0.96 0.006 290)">LinkedIn</a><span>·</span>
+          <a href="https://github.com/" target="_blank" rel="noopener" style="color:oklch(0.6 0.01 290)" style-hover="color:oklch(0.96 0.006 290)">GitHub</a><span>·</span>
+          <span style="text-transform:none;letter-spacing:0.02em">Bootstrapping ideas, one sprint at a time.</span>
+        </div>
+        <button ref="{{ bttRef }}" onClick="{{ backToTop }}" style="background:none;border:0;padding:6px 0;font:inherit;letter-spacing:inherit;text-transform:inherit;color:oklch(0.6 0.01 290);cursor:pointer" style-hover="color:oklch(0.96 0.006 290)">Back to top ↑</button>
+      </div>
+    </section>
+  </div>
+  <canvas ref="{{ trailRef }}" aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:4;pointer-events:none"></canvas>
+  <div ref="{{ spiralLayerRef }}" aria-hidden="true" style="position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden">
+    <sc-for list="{{ doodles }}" as="dd" hint-placeholder-count="0">
+      <div data-sp="1" style="position:absolute;left:0;top:0;width:{{ dd.w }};aspect-ratio:1/1;opacity:0;color:oklch(0.96 0.006 290)">{{ dd.svg }}</div>
+    </sc-for>
+  </div>
+  <div ref="{{ flyRef }}" aria-hidden="true" style="position:absolute;left:0;top:0;width:46px;height:46px;margin:-23px 0 0 -23px;z-index:4;pointer-events:none;opacity:0">{{ planeIcon }}</div>
+  <canvas ref="{{ footTrailRef }}" aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:4;pointer-events:none"></canvas>
+  <div ref="{{ footFlyRef }}" aria-hidden="true" style="position:absolute;left:0;top:0;width:46px;height:46px;margin:-23px 0 0 -23px;z-index:4;pointer-events:none;opacity:0">{{ planeIcon }}</div>
+  </sc-if>
+
+  <sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Projects" style="position:relative;z-index:2;flex:1;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;padding:8px clamp(20px,5vw,64px) 32px;overflow:hidden;animation:screenIn .6s cubic-bezier(.2,.7,.2,1) both">
+      <sc-if value="{{ outro }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:30;pointer-events:none;background:oklch(0.13 0.008 290);animation:softOut 1.2s cubic-bezier(.4,0,.2,1) both"></div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;position:relative;z-index:3">
+        <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.14em;color:oklch(0.6 0.01 290)"><span style="color:var(--accent, oklch(0.72 0.19 295))">{{ curNum }}</span> / {{ total }}</div>
+        <h2 style="margin:0;font-weight:300;font-size:clamp(30px,3.4vw,46px);line-height:1.1;letter-spacing:-0.03em">{{ cur.title }}</h2>
+      </div>
+      <div ref="{{ stageRef }}" onMouseMove="{{ onStageMove }}" onMouseLeave="{{ onStageLeave }}" style="flex:1;position:relative;width:100%;min-height:260px;--s:clamp(170px,min(38vh,28vw),340px);--px:0;--py:0;--lift:0px">
+        <div style="position:absolute;left:50%;top:54%;width:var(--s);aspect-ratio:1/1;transform:translate(-50%,-50%);perspective:calc(var(--s) * 3.2);transform-style:preserve-3d">
+          <sc-for list="{{ discs }}" as="d" hint-placeholder-count="5">
+            <div style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.22,1.1,.36,1), opacity .6s;transform:{{ d.transform }};z-index:{{ d.z }};opacity:{{ d.op }};visibility:{{ d.vis }};--glint:{{ d.glint }}">
+              <div style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform:{{ d.tilt }}">
+                <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;transform:translate3d(0,7%,-18px) scale(.97);background:radial-gradient(circle closest-side, transparent 30%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.2) 80%, transparent 100%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-4px);background:linear-gradient(160deg,#d7d9dc,#8d9196 55%,#c4c7cb);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+                <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;background:oklch(0.22 0.015 295);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)">
+                  <div style="position:absolute;inset:0;transition:transform 1s cubic-bezier(.22,1,.36,1);transform:rotate({{ d.roll }})">
+                    <div style="position:absolute;inset:0;animation:spin 24s linear infinite;animation-play-state:{{ d.spin }}">
+                      <image-slot id="{{ d.slotId }}" shape="circle" placeholder="{{ d.ph }}" style="width:100%;height:100%;display:block"></image-slot>
+                    </div>
+                  </div>
+                  <div style="position:absolute;left:32%;top:32%;width:36%;height:36%;border-radius:50%;pointer-events:none;border:3px solid rgba(225,228,234,.85);box-shadow:inset 0 0 0 8px rgba(232,235,239,.55), inset 0 0 0 9px rgba(255,255,255,.9);box-sizing:border-box"></div>
+                  <div style="position:absolute;inset:0;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.65;background:conic-gradient(from calc(var(--glint) + var(--px) * 70deg), transparent 0deg, rgba(255,255,255,.5) 16deg, transparent 38deg, transparent 140deg, rgba(150,215,255,.32) 168deg, rgba(255,170,225,.32) 186deg, rgba(255,236,170,.26) 200deg, transparent 224deg, transparent 360deg), radial-gradient(circle at calc(32% + var(--px) * 18%) calc(24% + var(--py) * 18%), rgba(255,255,255,.3), transparent 46%)"></div>
+                </div>
+  <sc-if value="{{ d.isActive }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ openCase }}" aria-label="Open project" style="position:absolute;left:39%;top:39%;width:22%;height:22%;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;padding:0;transform:translateZ(10px);z-index:5" style-hover="background:var(--accent2, oklch(0.62 0.21 295));border-color:var(--accent, oklch(0.72 0.19 295))">Open</button>
+              </sc-if>
+              </div>
+              <sc-if value="{{ d.inactive }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ d.go }}" aria-label="{{ d.label }}" style="position:absolute;inset:0;border-radius:50%;background:transparent;border:0;cursor:pointer;padding:0"></button>
+              </sc-if>
+              
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;position:relative;z-index:3">
+        <p style="margin:0;max-width:460px;font-size:15px;line-height:1.6;color:oklch(0.72 0.01 290);text-wrap:pretty">{{ cur.desc }}</p>
+        <button onClick="{{ openCase }}" style="display:flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:oklch(0.96 0.006 290);font-family:inherit;font-size:14px;cursor:pointer;transition:background .2s,border-color .2s" style-hover="background:var(--accent2, oklch(0.62 0.21 295));border-color:var(--accent2, oklch(0.62 0.21 295))"><span>View case study</span><span>→</span></button>
+        <div style="display:flex;align-items:center;gap:16px">
+          <button onClick="{{ prev }}" disabled="{{ atStart }}" aria-label="Previous project" style="width:44px;height:44px;border-radius:50%;border:1px solid oklch(0.32 0.015 290);background:transparent;color:oklch(0.9 0.006 290);font-size:16px;cursor:pointer;font-family:inherit" style-hover="border-color:var(--accent, oklch(0.72 0.19 295))">←</button>
+          <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:oklch(0.55 0.01 290);white-space:nowrap">Scroll · Click · ← →</span>
+          <button onClick="{{ next }}" disabled="{{ atEnd }}" aria-label="Next project" style="width:44px;height:44px;border-radius:50%;border:1px solid oklch(0.32 0.015 290);background:transparent;color:oklch(0.9 0.006 290);font-size:16px;cursor:pointer;font-family:inherit" style-hover="border-color:var(--accent, oklch(0.72 0.19 295))">→</button>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Contact" style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto;padding:0 clamp(20px,5vw,64px);animation:screenIn .6s cubic-bezier(.2,.7,.2,1) both">
+      <div style="flex:1;display:flex;flex-wrap:wrap;align-items:center;gap:64px;padding:24px 0 48px">
+        <div style="flex:0 1 320px;display:flex;justify-content:center;position:relative;padding-top:110px">
+          <div style="position:relative;width:min(300px,30vw,42vh);min-width:200px;aspect-ratio:380/440;transform-origin:50% 95%;animation:wave 2.6s ease-in-out infinite">
+            <image-slot id="avatar-bitmoji" shape="rounded" radius="32" fit="contain" placeholder="Same avatar as the hero" style="width:100%;height:100%;display:block"></image-slot>
+          </div>
+          <div style="position:absolute;top:0;left:0;z-index:3;pointer-events:none">{{ byeBubble }}</div>
+        </div>
+        <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:28px">
+          <h2 style="margin:0;font-weight:300;font-size:clamp(34px,4vw,56px);line-height:1.12;letter-spacing:-0.03em;text-wrap:pretty">Got an idea worth bootstrapping? Let's talk.</h2>
+          <a href="mailto:hello@debashish.com" style="align-self:flex-start;display:flex;align-items:center;gap:14px;font-size:clamp(20px,2.2vw,28px);font-weight:400;letter-spacing:-0.01em;padding-bottom:8px;border-bottom:1px solid var(--accent, oklch(0.72 0.19 295))" style-hover="color:var(--accent, oklch(0.72 0.19 295))">
+            <span>hello@debashish.com</span><span style="color:var(--accent, oklch(0.72 0.19 295))">→</span>
+          </a>
+        </div>
+      </div>
+      <footer style="display:flex;justify-content:space-between;gap:16px;padding:20px 0 28px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:oklch(0.6 0.01 290);border-top:1px solid oklch(0.22 0.01 290)">
+        <span>© 2026 Debashish</span>
+        <button onClick="{{ goProjects }}" style="background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;color:oklch(0.6 0.01 290);cursor:pointer" style-hover="color:oklch(0.96 0.006 290)">← Back to projects</button>
+      </footer>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ caseOpen }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ caseRef }}" onScroll="{{ onCaseScroll }}" data-screen-label="Case study" style="position:absolute;inset:0;z-index:20;overflow-y:auto;scroll-behavior:smooth;animation:bgIn .5s 1.3s both">
+      <sc-if value="{{ closing }}" hint-placeholder-val="{{ false }}">
+        <div style="position:fixed;inset:0;z-index:50;pointer-events:none;background:oklch(0.13 0.008 290);animation:softIn 1s cubic-bezier(.4,0,.2,1) both"></div>
+      </sc-if>
+      <div style="position:fixed;inset:0;z-index:40;pointer-events:none;animation:fadeOut .6s 2.1s forwards">
+        <div style="position:absolute;inset:0;background:oklch(0.13 0.008 290 / 0.35);backdrop-filter:blur(10px) saturate(130%);-webkit-backdrop-filter:blur(10px) saturate(130%);animation:softOut .45s reverse both"></div>
+        <div style="position:absolute;inset:0;background:oklch(0.13 0.008 290);animation:softOut .6s 1.2s reverse both"></div>
+        <div style="position:absolute;left:50%;top:50%;width:70vmin;height:70vmin;margin:-35vmin 0 0 -35vmin;border-radius:50%;background:radial-gradient(circle closest-side, color-mix(in oklch, var(--accent, oklch(0.72 0.19 295)) 35%, transparent), transparent 70%);animation:glowIn 1.4s .8s cubic-bezier(.4,0,.2,1) both"></div>
+        <div style="position:absolute;inset:0;perspective:1100px;perspective-origin:50% 50%">
+          <div style="position:absolute;left:50%;top:50%;width:{{ intro.size }};height:{{ intro.size }};margin-left:{{ intro.half }};margin-top:{{ intro.half }};border-radius:50%;background:radial-gradient(circle closest-side, rgba(0,0,0,.55), transparent 75%);transform:translate(var(--dx),calc(var(--dy) + 6%)) scale(.95);--dx:{{ intro.dx }};--dy:{{ intro.dy }};animation:shadowDrop 1s cubic-bezier(.3,0,.2,1) both"></div>
+          <div style="position:absolute;left:50%;top:50%;width:{{ intro.size }};height:{{ intro.size }};margin-left:{{ intro.half }};margin-top:{{ intro.half }};transform-style:preserve-3d;--dx:{{ intro.dx }};--dy:{{ intro.dy }};animation:liftOff 1.9s cubic-bezier(.5,0,.25,1) both">
+            <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-5px);background:linear-gradient(160deg,#d7d9dc,#8d9196 55%,#c4c7cb);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+            <div style="position:absolute;inset:0;border-radius:50%;transform:translateZ(-2.5px);background:#a9adb3;-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%)"></div>
+            <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;background:oklch(0.22 0.015 295);-webkit-mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);mask:radial-gradient(circle closest-side, transparent 16.6%, #000 17.1%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)">
+              <div style="position:absolute;inset:0;animation:spin 1.2s .5s cubic-bezier(.4,0,.2,1) both">
+                <image-slot id="{{ intro.slot }}" shape="circle" placeholder="" style="width:100%;height:100%;display:block;pointer-events:none"></image-slot>
+              </div>
+              <div style="position:absolute;left:32%;top:32%;width:36%;height:36%;border-radius:50%;border:3px solid rgba(225,228,234,.85);box-shadow:inset 0 0 0 8px rgba(232,235,239,.55);box-sizing:border-box"></div>
+              <div style="position:absolute;inset:0;border-radius:50%;mix-blend-mode:screen;background:conic-gradient(from 120deg, transparent 0deg, rgba(255,255,255,.55) 16deg, transparent 38deg, transparent 140deg, rgba(150,215,255,.35) 168deg, rgba(255,170,225,.35) 186deg, rgba(255,236,170,.3) 200deg, transparent 224deg);animation:sheenSweep 1.9s linear both"></div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:0 24px">
+          <div style="overflow:hidden"><div style="font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:0.16em;color:var(--accent, oklch(0.72 0.19 295));animation:rise .7s 1.15s cubic-bezier(.2,.8,.2,1) both">{{ curNum }} / {{ total }}</div></div>
+          <div style="overflow:hidden;padding-bottom:8px"><div style="font-size:clamp(48px,8vw,120px);font-weight:300;letter-spacing:-0.04em;line-height:1;animation:rise .9s 1.2s cubic-bezier(.2,.8,.2,1) both">{{ cur.title }}</div></div>
+        </div>
+      </div>
+
+      <div style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,5vw,64px);background:oklch(0.13 0.008 290 / 0.55);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border-bottom:1px solid rgba(255,255,255,.07);animation:softOut .6s 2s reverse both">
+        <button onClick="{{ closeCase }}" style="display:flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:oklch(0.92 0.006 290);font-family:inherit;font-size:13px;cursor:pointer" style-hover="background:rgba(255,255,255,.1)"><span>←</span><span>All projects</span></button>
+        <span style="font-size:14px;color:oklch(0.86 0.006 290)">{{ cur.title }}</span>
+        <button onClick="{{ nextCase }}" style="display:flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:oklch(0.92 0.006 290);font-family:inherit;font-size:13px;cursor:pointer" style-hover="background:rgba(255,255,255,.1)"><span>Next</span><span>→</span></button>
+      </div>
+
+      <div style="max-width:1200px;margin:0 auto;padding:32px clamp(20px,5vw,64px) 120px;animation:screenIn .9s 2s cubic-bezier(.2,.7,.2,1) both">
+        <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:repeating-linear-gradient(135deg, oklch(0.17 0.01 290) 0 14px, oklch(0.15 0.01 290) 14px 28px)">
+          <sc-if value="{{ hasVideo }}" hint-placeholder-val="{{ false }}">
+            <video src="{{ cur.video }}" autoplay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          </sc-if>
+          <sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
+              <span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">▶</span>
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.62 0.01 290)">Project video · 16:9</span>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px;padding:56px 0 64px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="flex:1 1 420px;display:flex;flex-direction:column;gap:18px">
+            <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.14em;color:var(--accent, oklch(0.72 0.19 295))">{{ curNum }} / {{ total }}</div>
+            <h1 style="margin:0;font-weight:300;font-size:clamp(40px,5vw,72px);line-height:1.05;letter-spacing:-0.035em">{{ cur.title }}</h1>
+            <p style="margin:0;max-width:560px;font-size:18px;line-height:1.6;color:oklch(0.74 0.01 290);text-wrap:pretty">{{ cur.desc }}</p>
+          </div>
+          <div style="display:grid;grid-template-columns:auto auto;gap:10px 28px;font-size:14px">
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Role</span><span>{{ cur.role }}</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Year</span><span>{{ cur.year }}</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Team</span><span>{{ cur.team }}</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(170px,220px) minmax(0,1fr);gap:clamp(32px,6vw,80px);padding-top:56px">
+          <aside style="position:sticky;top:96px;align-self:start">
+            <div style="display:flex;flex-direction:column;gap:2px;padding:8px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
+              <sc-for list="{{ lenses }}" as="L" hint-placeholder-count="5">
+                <button onClick="{{ L.go }}" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:13px;border:0;background:{{ L.bg }};color:{{ L.color }};font-family:inherit;font-size:14px;text-align:left;cursor:pointer;transition:background .25s,color .25s" style-hover="color:oklch(0.96 0.006 290)">
+                  <span style="font-family:'Geist Mono',monospace;font-size:10px;color:{{ L.numColor }}">{{ L.num }}</span>
+                  <span>{{ L.title }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </aside>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ lenses }}" as="L" hint-placeholder-count="5">
+              <section data-lens="{{ L.idx }}" style="display:flex;flex-direction:column;gap:20px;padding:0 0 96px">
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                  <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--accent, oklch(0.72 0.19 295))">{{ L.num }}</span>
+                  <span style="padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.82 0.01 290)">Hat · {{ L.hat }}</span>
+                </div>
+                <h2 style="margin:0;font-weight:300;font-size:clamp(30px,3.2vw,44px);line-height:1.1;letter-spacing:-0.03em">{{ L.title }}</h2>
+                <p style="margin:0;max-width:640px;font-size:17px;line-height:1.7;color:oklch(0.72 0.01 290);text-wrap:pretty">{{ L.prompt }}</p>
+                <div style="display:flex;flex-direction:column;max-width:640px;border-top:1px solid rgba(255,255,255,.08)">
+                  <div style="display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:oklch(0.86 0.006 290)"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:oklch(0.58 0.01 290);padding-top:3px">D1</span><span>Decision I made, and why.</span></div>
+                  <div style="display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:oklch(0.86 0.006 290)"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:oklch(0.58 0.01 290);padding-top:3px">D2</span><span>Trade-off I accepted, and what it cost.</span></div>
+                </div>
+              </section>
+            </sc-for>
+          </div>
+        </div>
+
+        <button onClick="{{ nextCase }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:40px 0;border:0;border-top:1px solid rgba(255,255,255,.08);background:none;color:oklch(0.96 0.006 290);font-family:inherit;cursor:pointer;text-align:left" style-hover="color:var(--accent, oklch(0.72 0.19 295))">
+          <span style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.58 0.01 290)">Next project</span><span style="font-size:clamp(28px,3.4vw,48px);font-weight:300;letter-spacing:-0.03em">{{ nextTitle }}</span></span>
+          <span style="font-size:32px">→</span>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;spotlightSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:240,&quot;min&quot;:120,&quot;max&quot;:420,&quot;step&quot;:10,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;doodleOpacity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.08,&quot;min&quot;:0,&quot;max&quot;:0.4,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#a97cf8&quot;,&quot;options&quot;:[&quot;#a97cf8&quot;,&quot;#5ec8e8&quot;,&quot;#ee8ac4&quot;,&quot;#c6e66b&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;flightDuration&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.8,&quot;min&quot;:1,&quot;max&quot;:3.5,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;burnDuration&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.4,&quot;min&quot;:1,&quot;max&quot;:5,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;trail&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { i: 0, active: 0, screen: 'about', caseOpen: false, lens: 0, shapeOn: false, mode: null, note: -1, reduced: false, narrow: false, idea: '', footFocus: false, footPhase: false, sentNote: false, copied: false };
+  footRef = React.createRef(); footDiscRef = React.createRef(); footInputRef = React.createRef(); bttRef = React.createRef(); footFlyRef = React.createRef(); footTrailRef = React.createRef();
+  caseRef = React.createRef(); rootRef = React.createRef(); stageRef = React.createRef();
+  heroRef = React.createRef(); heroContentRef = React.createRef(); doodleLayerRef = React.createRef();
+  spotRef = React.createRef(); shipRef = React.createRef(); streakRef = React.createRef();
+  discMorphRef = React.createRef(); discSpinRef = React.createRef(); cueRef = React.createRef();
+  inkRef = React.createRef(); cursorRef = React.createRef(); planeRef = React.createRef();
+  scrollerRef = React.createRef(); landPanelRef = React.createRef(); landCenterRef = React.createRef(); laserRef = React.createRef(); shimmerRef = React.createRef(); hubGlowRef = React.createRef(); burnedRef = React.createRef(); trailRef = React.createRef(); spiralLayerRef = React.createRef(); flyRef = React.createRef();
+  notes = [
+    'Could a social app be built to give you your attention back?',
+    "Money out isn't money spent. Why does every app pretend it is?",
+    "Good ideas rarely show up at the desk. Mine arrive in queues.",
+    'Why do lyrics live in another window, not where my eyes already are?',
+    'Why does a two-week sprint always feel like four days?',
+    "How much caffeine is 'enough'? Still collecting data.",
+    "If everything's a priority, which note survives Friday?"
+  ];
+  lensDefs = [
+    ['Problem Statement', 'Product Owner', 'What was broken, for whom, and why it mattered enough to fix now.'],
+    ['Product View', 'Product Manager', 'How you shaped the solution: research, scope, priorities and the calls you made on what not to build.'],
+    ['Engineering View', 'Tech Partner', 'The architecture and constraints you worked within, and how you kept product and engineering aligned.'],
+    ['Result', 'Owner of outcomes', 'What shipped and what changed: adoption, metrics, feedback.'],
+    ['Future Scope', 'Strategist', 'What you would do next, and what you learned that changes the roadmap.']
+  ];
+  byes = [['bye!', 'English'], ['adiós', 'Español'], ['au revoir', 'Français'], ['ciao', 'Italiano'], ['tschüss', 'Deutsch'], ['sayonara', '日本語']];
+  projects = Array.from({ length: 10 }, (_, k) => ({
+    title: 'Project ' + String(k + 1).padStart(2, '0'), role: 'Product Owner', year: '2025', team: '—', video: '',
+    desc: 'Short description: the problem, what you shipped, and what changed.'
+  }));
+  jitter = [-2.5, 3, -1.5, 2.5, -3, 0, 2, -2];
+  doodleDefs = [
+    { x: '60%', y: '17%', w: '72px', r: '-6deg', p: ['M10 24 Q10 16 18 16 L52 16 Q60 16 60 24 L60 42 Q60 50 52 50 L30 50 L19 61 L21 50 L18 50 Q10 50 10 42 Z', 'M20 28 L48 28', 'M20 37 L40 37', 'M58 16 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0', 'M65 13 L65 19'] },
+    { x: '85%', y: '22%', w: '82px', r: '8deg', p: ['M22 9 L58 8 L59 63 L54 68 L49 62 L44 68 L39 62 L34 68 L29 62 L24 68 L21 63 Z', 'M29 19 L50 18', 'M29 27 L46 27', 'M29 35 L52 34', 'M29 47 L38 47', 'M44 47 L52 46', 'M21 32 L33 37 L27 47'] },
+    { x: '72%', y: '48%', w: '78px', r: '-4deg', p: ['M40 12 C26 12 18 22 20 34 C21 43 29 47 31 56 L49 56 C51 47 59 43 60 34 C62 22 54 12 40 12 Z', 'M32 62 L48 62', 'M34 68 L46 68', 'M34 42 L37 35 L40 42 L43 35 L46 42', 'M12 18 L6 14', 'M68 18 L74 14', 'M40 6 L40 2'] },
+    { x: '92%', y: '60%', w: '86px', r: '10deg', p: ['M17 46 C15 20 65 20 63 46', 'M11 44 Q11 41 15 41 L20 41 Q23 41 23 44 L23 60 Q23 63 20 63 L15 63 Q11 63 11 60 Z', 'M57 44 Q57 41 60 41 L65 41 Q69 41 69 44 L69 60 Q69 63 65 63 L60 63 Q57 63 57 60 Z', 'M62 22 L62 6 L72 4 L72 18', 'M55 22 a3.5 3 0 1 0 7 0 a3.5 3 0 1 0 -7 0', 'M65 18 a3.5 3 0 1 0 7 0 a3.5 3 0 1 0 -7 0'] },
+    { x: '80%', y: '82%', w: '80px', r: '-8deg', p: ['M12 19 L66 18 L67 66 L13 67 Z', 'M12 29 L66 29', 'M25 12 L25 23', 'M53 12 L53 23', 'M19 41 L23 45 L30 37', 'M37 41 L41 45 L48 37', 'M19 56 L23 60 L30 52', 'M38 52 L48 52 L48 61 L38 61 Z'] },
+    { x: '61%', y: '80%', w: '70px', r: '5deg', p: ['M18 30 L60 30 L56 65 Q55 69 50 69 L28 69 Q23 69 22 65 Z', 'M59 38 C71 38 71 55 57 55', 'M30 22 C26 17 34 13 30 7', 'M40 22 C36 17 44 13 40 7', 'M50 22 C46 17 54 13 50 7'] },
+    { x: '7%', y: '89%', w: '62px', r: '-10deg', p: ['M14 14 L64 15 L65 51 L51 65 L15 64 Z', 'M51 65 L51 52 L65 51', 'M22 27 L52 26', 'M22 35 L48 36', 'M22 43 L38 43'] }
+  ];
+  mkSvg(paths) {
+    const h = React.createElement;
+    const g = { fill: 'none', stroke: 'currentColor', strokeLinecap: 'round', strokeLinejoin: 'round' };
+    return h('svg', { viewBox: '0 0 80 80', width: '100%', height: '100%', style: { display: 'block', overflow: 'visible' } },
+      h('g', Object.assign({ strokeWidth: 1.6 }, g), paths.map((d, k) => h('path', { key: k, d }))),
+      h('g', Object.assign({ strokeWidth: 0.9, opacity: 0.5, transform: 'translate(0.9 0.6) rotate(0.8 40 40)' }, g), paths.map((d, k) => h('path', { key: 'b' + k, d }))));
+  }
+  componentDidMount() {
+    this.t = setInterval(() => this.setState(st => ({ i: st.i + 1 })), 3200);
+    this.onWheel = this.handleWheel.bind(this);
+    this.onKey = this.handleKey.bind(this);
+    this.onTS = (e) => { this.ty = e.touches[0].clientY; };
+    this.onTM = (e) => {
+      if (this.drawTouch || this.state.screen !== 'about' || this.state.caseOpen) return;
+      const y = e.touches[0].clientY, dy = (this.ty ?? y) - y; this.ty = y;
+      
+    };
+    const r = this.rootRef.current;
+    r.addEventListener('wheel', this.onWheel, { passive: false });
+    r.addEventListener('touchstart', this.onTS, { passive: true });
+    r.addEventListener('touchmove', this.onTM, { passive: false });
+    window.addEventListener('keydown', this.onKey);
+    this.mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this.onMq = () => this.setState({ reduced: this.mq.matches });
+    this.onMq(); this.mq.addEventListener('change', this.onMq);
+    this.onResize = () => { this.setState({ narrow: window.innerWidth < 560 }); this.schedulePaint(); };
+    this.onResize(); window.addEventListener('resize', this.onResize);
+    this.schedulePaint();
+    if (window.matchMedia('(hover: none)').matches && !this.mq.matches) this.roamT = setTimeout(() => this.roam(4500), 900);
+  }
+  componentWillUnmount() {
+    clearInterval(this.t); clearTimeout(this.roamT); clearTimeout(this.shT); clearTimeout(this.ct);
+    cancelAnimationFrame(this.raf); cancelAnimationFrame(this.roamRaf); cancelAnimationFrame(this.inkRaf); cancelAnimationFrame(this.autoRaf); cancelAnimationFrame(this.sdRaf); cancelAnimationFrame(this.ffRaf); clearTimeout(this.snT); clearTimeout(this.cpT);
+    const r = this.rootRef.current;
+    if (r) { r.removeEventListener('wheel', this.onWheel); r.removeEventListener('touchstart', this.onTS); r.removeEventListener('touchmove', this.onTM); }
+    window.removeEventListener('keydown', this.onKey); window.removeEventListener('resize', this.onResize);
+    this.mq && this.mq.removeEventListener('change', this.onMq);
+  }
+  handleKey(e) {
+    if (this.state.caseOpen) { if (e.key === 'Escape') this.closeCase(); return; }
+    if (this.state.screen !== 'projects') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') this.goTo(this.state.active + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') this.goTo(this.state.active - 1);
+  }
+  handleWheel(e) {
+    if (this.state.caseOpen) return;
+    if (this.state.screen === 'about') return;
+    if (this.state.screen !== 'projects') return;
+    e.preventDefault();
+    const d = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    const now = performance.now();
+    this.acc = (now - (this.accAt || 0) > 200 ? 0 : this.acc || 0) + d;
+    this.accAt = now;
+    if (Math.abs(this.acc) > 40 && now - (this.stepAt || 0) > 420) {
+      this.stepAt = now; this.acc = 0;
+      this.goTo(this.state.active + Math.sign(d));
+    }
+  }
+  componentDidUpdate(pp, ps) {
+    const a = this.state, b = ps || {};
+    if (this.pendingFoot && a.screen === 'about') { this.pendingFoot = false; setTimeout(() => this.scrollToFoot(), 80); }
+    if (a.active !== b.active || a.caseOpen !== b.caseOpen || a.closing !== b.closing || a.screen !== b.screen || a.reduced !== b.reduced || pp !== this.props) this.schedulePaint();
+  }
+  goContact = () => { if (this.state.screen !== 'about' || this.state.caseOpen) { this.pendingFoot = true; this.show('about'); } else this.scrollToFoot(); };
+  scrollToFoot() { const sc = this.scrollerRef.current, ft = this.footRef.current; if (!sc || !ft) return; this.cancelAuto(); sc.scrollTo({ top: ft.offsetTop, behavior: this.state.reduced ? 'auto' : 'smooth' }); }
+  focusIdea = () => { const i = this.footInputRef.current; if (i) i.focus(); };
+  onIdea = (e) => this.setState({ idea: (e.target.value || '').slice(0, 80) });
+  onIdeaFocus = () => {
+    this.setState({ footFocus: true });
+    if (this.state.narrow) setTimeout(() => {
+      const sc = this.scrollerRef.current, d = this.footDiscRef.current; if (!sc || !d) return;
+      sc.scrollTo({ top: sc.scrollTop + d.getBoundingClientRect().top - sc.getBoundingClientRect().top - 80, behavior: 'smooth' });
+    }, 320);
+  };
+  onIdeaBlur = () => this.setState({ footFocus: false });
+  onIdeaKey = (e) => { if (e.key === 'Enter') { e.preventDefault(); this.footShip(); } };
+  openMail(t) {
+    const a = document.createElement('a');
+    a.href = 'mailto:hello@debashish.com?subject=' + encodeURIComponent('An idea worth shipping') + '&body=' + encodeURIComponent(t);
+    a.click();
+  }
+  footShip = () => {
+    const idea = (this.state.idea || '').trim(); if (!idea || this.footBusy) return;
+    if (this.state.reduced) { this.openMail(idea); return; }
+    this.footBusy = true;
+    if (this.footInputRef.current) this.footInputRef.current.blur();
+    this.setState({ footPhase: true });
+    setTimeout(() => {
+      const d = this.footDiscRef.current, rootEl = this.rootRef.current;
+      const done = () => {
+        this.openMail(idea); this.footBusy = false;
+        this.setState({ footPhase: false, sentNote: true });
+        clearTimeout(this.snT); this.snT = setTimeout(() => this.setState({ sentNote: false }), 2600);
+      };
+      if (!d || !rootEl) { done(); return; }
+      const r = d.getBoundingClientRect(), rr = rootEl.getBoundingClientRect(), W = rr.width, H = rr.height;
+      const from = { x: r.left + r.width / 2 - rr.left, y: r.top + r.height / 2 - rr.top };
+      this.flyFoot(from, { x: from.x - W * 0.18, y: from.y - H * 0.3 }, { x: W * 0.7, y: -H * 0.05 }, { x: W + 90, y: -90 }, 1200, done, false);
+    }, 720);
+  };
+  copyEmail = () => {
+    const t = 'hello@debashish.com';
+    const ok = () => { this.setState({ copied: true }); clearTimeout(this.cpT); this.cpT = setTimeout(() => this.setState({ copied: false }), 1800); };
+    const fb = () => { const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (_) {} ta.remove(); ok(); };
+    try { navigator.clipboard.writeText(t).then(ok, fb); } catch (_) { fb(); }
+  };
+  backToTop = () => {
+    const sc = this.scrollerRef.current, rootEl = this.rootRef.current, b = this.bttRef.current; if (!sc) return;
+    if (this.state.reduced || !rootEl || !b) { sc.scrollTop = 0; return; }
+    this.cancelAuto();
+    const rr = rootEl.getBoundingClientRect(), br = b.getBoundingClientRect(), W = rr.width, H = rr.height, dur = 2000;
+    const from = { x: br.left + br.width / 2 - rr.left, y: br.top - rr.top };
+    this.btt = true;
+    this.flyFoot(from, { x: from.x - W * 0.25, y: from.y - H * 0.35 }, { x: W * 0.2, y: H * 0.5 }, { x: W * 0.32, y: H * 0.3 }, dur, () => { this.btt = false; this.schedulePaint(); }, true);
+    const s0 = sc.scrollTop, t0 = performance.now(), io = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const step = (now) => { const t = Math.min(1, (now - t0) / dur); sc.scrollTop = s0 * (1 - io(t)); this.autoRaf = t < 1 ? requestAnimationFrame(step) : 0; };
+    this.autoRaf = requestAnimationFrame(step);
+  };
+  flyFoot(from, c1, c2, to, dur, done, fadeEnd) {
+    const el = this.footFlyRef.current, cv = this.footTrailRef.current, rootEl = this.rootRef.current;
+    if (!el || !rootEl) { done && done(); return; }
+    cancelAnimationFrame(this.ffRaf);
+    const pts = [], t0 = performance.now(), trail = this.props.trail ?? true;
+    const B = (t) => { const m = 1 - t; return { x: m * m * m * from.x + 3 * m * m * t * c1.x + 3 * m * t * t * c2.x + t * t * t * to.x, y: m * m * m * from.y + 3 * m * m * t * c1.y + 3 * m * t * t * c2.y + t * t * t * to.y }; };
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / dur), e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      const p = B(e), q = B(Math.min(1, e + 0.01)), p0 = B(Math.max(0, e - 0.01));
+      const ang = Math.atan2(q.y - p0.y, q.x - p0.x) * 180 / Math.PI + 22;
+      el.style.opacity = String(Math.min(1, t * 8, fadeEnd ? (1 - t) * 6 : 1));
+      el.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) rotate(' + ang.toFixed(1) + 'deg)';
+      pts.push(p); if (pts.length > 44) pts.shift();
+      if (cv) {
+        const rr = rootEl.getBoundingClientRect(), dpr = window.devicePixelRatio || 1, cw = Math.round(rr.width * dpr), ch = Math.round(rr.height * dpr);
+        if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; }
+        const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, rr.width, rr.height);
+        if (trail && t < 1) for (let k = pts.length - 3; k >= 0; k -= 2) {
+          const f = k / pts.length;
+          ctx.fillStyle = 'rgba(242,240,247,' + (0.7 * f * (fadeEnd ? Math.min(1, (1 - t) * 4) : 1)).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(pts[k].x, pts[k].y, 0.8 + 1.6 * f, 0, 6.2832); ctx.fill();
+        }
+      }
+      if (t < 1) this.ffRaf = requestAnimationFrame(step);
+      else { el.style.opacity = '0'; this.ffRaf = 0; done && done(); }
+    };
+    this.ffRaf = requestAnimationFrame(step);
+  }
+  footLabel() {
+    const h = React.createElement, t = this.state.idea || '', ph = !t;
+    const text = ph ? 'Write your idea…' : t;
+    const splitN = (str, n) => {
+      const words = str.split(/\s+/), out = []; const target = str.length / n; let cur = '';
+      words.forEach(w => { if (cur && out.length < n - 1 && (cur + ' ' + w).length > target + 3) { out.push(cur); cur = w; } else cur = cur ? cur + ' ' + w : w; });
+      out.push(cur); return out;
+    };
+    let lines = ph || text.length <= 22 ? [text] : splitN(text, text.length <= 48 ? 2 : 3);
+    const lens = lines.length === 3 ? [100, 128, 110] : [128, 118];
+    const fsFor = (l, k) => Math.min(18, lens[k] / (Math.max(l.length, 1) * 0.62));
+    const fs = Math.min.apply(null, lines.map(fsFor));
+    const fill = ph ? 'rgba(30,28,36,.38)' : '#1c1a22';
+    const caret = this.state.footFocus ? h('tspan', { key: 'c', style: { fill: 'var(--accent2, oklch(0.62 0.21 295))', animation: 'blink 1s steps(1) infinite' } }, '|') : null;
+    return h('svg', { viewBox: '0 0 200 200', width: '100%', height: '100%', style: { position: 'absolute', inset: 0, overflow: 'visible' } },
+      h('defs', null,
+        h('path', { id: 'fd-top', d: 'M36 70 Q100 40 164 70' }), h('path', { id: 'fd-bot', d: 'M40 146 Q100 174 160 146' }),
+        h('path', { id: 'fd-a', d: 'M48 52 Q100 30 152 52' }), h('path', { id: 'fd-b', d: 'M34 78 Q100 52 166 78' }), h('path', { id: 'fd-c', d: 'M42 148 Q100 174 158 148' })),
+      lines.map((l, k) => {
+        const ids = lines.length === 3 ? ['#fd-a', '#fd-b', '#fd-c'] : ['#fd-top', '#fd-bot'];
+        const nat = Math.max(l.length, 1) * fs * 0.62, room = lens[k];
+        const fit = nat > room ? { textLength: room, lengthAdjust: 'spacingAndGlyphs' } : {};
+        return h('text', Object.assign({ key: k, textAnchor: 'middle', style: { fontFamily: "'Permanent Marker', cursive", fontSize: fs, fill } }, fit),
+          h('textPath', { href: ids[k], startOffset: '50%' }, l, k === lines.length - 1 ? caret : null));
+      }));
+  }
+  penSvg() {
+    if (this._pen) return this._pen;
+    const h = React.createElement;
+    this._pen = h('svg', { viewBox: '0 0 140 40', width: '100%', style: { display: 'block', overflow: 'visible' } },
+      h('g', { fill: 'none', stroke: 'currentColor', strokeWidth: 1.4, strokeLinecap: 'round', strokeLinejoin: 'round' },
+        h('path', { d: 'M14 12 L96 12 Q100 12 100 16 L100 24 Q100 28 96 28 L14 28 Q10 28 10 24 L10 16 Q10 12 14 12 Z' }),
+        h('path', { d: 'M100 14 L122 15 Q127 15 127 20 Q127 25 122 25 L100 26', style: { stroke: 'var(--accent, oklch(0.72 0.19 295))' } }),
+        h('path', { d: 'M10 16 L4 18 L2 20 L4 22 L10 24' }),
+        h('path', { d: 'M30 12 L30 28', opacity: 0.5 }),
+        h('path', { d: 'M38 20 L86 20', opacity: 0.25 })));
+    return this._pen;
+  }
+  schedulePaint() { if (!this.sdRaf) this.sdRaf = requestAnimationFrame(this.paintSD); }
+  onSDScroll = () => this.schedulePaint();
+  cancelAuto = () => { if (this.autoRaf) { cancelAnimationFrame(this.autoRaf); this.autoRaf = 0; } };
+  launch = () => {
+    const sc = this.scrollerRef.current; if (!sc) return;
+    const H = sc.clientHeight, end = Math.min(sc.scrollHeight - H, 2.8 * H), mid = 1.6 * H;
+    this.setMode(null);
+    if (this.state.reduced) { sc.scrollTop = end; return; }
+    this.cancelAuto();
+    const fd = (this.props.flightDuration ?? 1.8) * 1000, bd = (this.props.burnDuration ?? 2.4) * 1000;
+    const s0 = sc.scrollTop, legs = [];
+    const io = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const sine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
+    if (s0 < mid) legs.push({ from: s0, to: mid, dur: Math.max(300, fd * (1 - s0 / mid)), ease: io });
+    const b0 = Math.max(s0, mid);
+    if (b0 < end) legs.push({ from: b0, to: end, dur: Math.max(300, bd * (1 - (b0 - mid) / (end - mid))), ease: sine });
+    if (!legs.length) return;
+    let i = 0, t0 = performance.now();
+    const step = (now) => {
+      const L = legs[i], t = Math.min(1, (now - t0) / L.dur);
+      sc.scrollTop = L.from + (L.to - L.from) * L.ease(t);
+      if (t >= 1) { i++; t0 = now; if (i >= legs.length) { this.autoRaf = 0; return; } }
+      this.autoRaf = requestAnimationFrame(step);
+    };
+    this.autoRaf = requestAnimationFrame(step);
+  };
+  goShipped = () => this.launch();
+  paintSD = () => {
+    this.sdRaf = 0;
+    const sc = this.scrollerRef.current, rootEl = this.rootRef.current; if (!sc || !rootEl) return;
+    const H = sc.clientHeight, W = sc.clientWidth, S = sc.scrollTop, red = this.state.reduced;
+    const cl = (x) => Math.max(0, Math.min(1, x)), sm = (x) => x * x * (3 - 2 * x), lerp = (a, b, t) => a + (b - a) * t;
+    const u = cl(S / (1.6 * H)), v = cl((S - 1.6 * H) / (1.2 * H)), b = cl((v - 0.12) / 0.6);
+    const rr = rootEl.getBoundingClientRect(), lc = this.landCenterRef.current, ship = this.shipRef.current;
+    let Bf = { x: W / 2, y: H * 0.55 }, A0 = { x: W * 0.3, y: H * 0.6 };
+    if (lc) { const r = lc.getBoundingClientRect(); Bf = { x: r.left + r.width / 2 - rr.left, y: r.top + r.height / 2 - rr.top - Math.max(0, 1.6 * H - S) }; }
+    if (ship) { const r = ship.getBoundingClientRect(); A0 = { x: r.right - rr.left, y: r.top + r.height * 0.45 - rr.top + Math.max(0, S - 0.6 * H) }; }
+    const P1 = { x: W * 0.9, y: A0.y - H * 0.22 }, P2 = { x: W * 0.1, y: Bf.y - H * 0.5 };
+    const P = (t) => { const m = 1 - t; return { x: m * m * m * A0.x + 3 * m * m * t * P1.x + 3 * m * t * t * P2.x + t * t * t * Bf.x, y: m * m * m * A0.y + 3 * m * m * t * P1.y + 3 * m * t * t * P2.y + t * t * t * Bf.y }; };
+    const angAt = (t) => { const p = P(Math.max(0, t - 0.01)), q = P(Math.min(1, t + 0.01)); return Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI + 22; };
+    if (u < 0.5) this.inkSnap = null; else if (!this.inkSnap && u > 0.9) this.inkSnap = (this.inkPts || []).map(p => ({ x: p.x, y: p.y, brk: p.brk }));
+    const fly = this.flyRef.current;
+    if (fly) {
+      if (red || this.btt || u <= 0.002 || v >= 0.12) fly.style.opacity = '0';
+      else {
+        let p = P(u), ang = angAt(u), s = 1, op = cl(u * 40);
+        if (v > 0) { const k = cl(v / 0.12); p = Bf; ang = angAt(1) + k * 200; s = 1 - 0.92 * k; op = 1 - k; }
+        fly.style.opacity = String(op);
+        fly.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) rotate(' + ang.toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
+      }
+    }
+    const cv = this.trailRef.current;
+    if (cv) {
+      const dpr = window.devicePixelRatio || 1, cw = Math.round(rr.width * dpr), ch = Math.round(rr.height * dpr);
+      if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; }
+      const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, rr.width, rr.height);
+      if ((this.props.trail ?? true) && !red && !this.btt && u > 0 && v < 0.15) {
+        const am = 1 - cl(v / 0.15), Sc = Math.min(S, 1.6 * H);
+        for (let k = 1; k <= 30; k++) {
+          const uk = u - k * 0.012; if (uk <= 0) break;
+          const p = P(uk), y = p.y - (Sc - uk * 1.6 * H), f = 1 - k / 30;
+          ctx.fillStyle = 'rgba(242,240,247,' + (0.7 * f * am).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(p.x, y, 0.8 + 1.6 * f, 0, 6.2832); ctx.fill();
+        }
+      }
+      const L = this.inkSnap;
+      if (!red && b > 0 && L && L.length > 1) {
+        const s = sm(cl((b - 0.04) / 0.6));
+        if (s < 1) {
+          const tf = (pt) => { const dx = pt.x - Bf.x, dy = pt.y - 0.75 * H - Bf.y, th = Math.atan2(dy, dx) + s * 1.8 * Math.PI, Rr = Math.hypot(dx, dy) * (1 - s); return [Bf.x + Rr * Math.cos(th), Bf.y + Rr * Math.sin(th)]; };
+          ctx.lineWidth = 1.3; ctx.lineCap = 'round'; ctx.strokeStyle = 'rgba(242,240,247,' + (0.8 * (1 - s) * cl(b * 10)).toFixed(3) + ')';
+          ctx.beginPath();
+          for (let k = 1; k < L.length; k++) { if (L[k].brk) continue; const p0 = tf(L[k - 1]), p1 = tf(L[k]); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); }
+          ctx.stroke();
+        }
+      }
+    }
+    const sl = this.spiralLayerRef.current;
+    if (sl) sl.querySelectorAll('[data-sp]').forEach((el, k) => {
+      const d = this.doodleDefs[k]; if (!d) return;
+      const w = parseFloat(d.w), sx = parseFloat(d.x) / 100 * W, sy = parseFloat(d.y) / 100 * H - 0.75 * H;
+      const s = sm(cl((b - k * 0.05) / 0.55));
+      if (red || b <= 0 || s >= 1) { el.style.opacity = '0'; return; }
+      const dx = sx - Bf.x, dy = sy - Bf.y, th = Math.atan2(dy, dx) + s * 1.8 * Math.PI, Rr = Math.hypot(dx, dy) * (1 - s);
+      el.style.opacity = (0.85 * (1 - s * s)).toFixed(3);
+      el.style.transform = 'translate(' + (Bf.x + Rr * Math.cos(th) - w / 2).toFixed(1) + 'px,' + (Bf.y + Rr * Math.sin(th) - w / 2).toFixed(1) + 'px) rotate(' + (parseFloat(d.r) + s * 540).toFixed(1) + 'deg) scale(' + (1 - 0.85 * s).toFixed(3) + ')';
+    });
+    const r = red ? 1 : sm(cl((v - 0.8) / 0.2));
+    const n = this.projects.length, a = this.state.active;
+    if (v < 0.8 || this.burnIdx == null) this.burnIdx = this.wrap(a);
+    const caseHide = this.state.caseOpen && !this.state.closing;
+    const Rad = lerp(17.5, 49.5, b);
+    const stg = this.stageRef.current; if (stg && lc && stg.contains(lc)) stg.style.pointerEvents = r >= 1 ? 'auto' : 'none';
+    if (lc) lc.querySelectorAll('[data-ld]').forEach((el) => {
+      const k = +el.dataset.ld; let o = k - a; o -= n * Math.round(o / n);
+      const near = Math.min(o, 2.2), z = o === 0 ? near * 0.42 * r : lerp(-0.35, near * 0.42, r);
+      el.style.transition = r >= 1 ? 'transform 1s cubic-bezier(.22,1.1,.36,1), opacity .6s' : 'none';
+      el.style.transform = 'translate3d(calc(' + (o * 1.02 * r).toFixed(3) + ' * var(--s)), calc(' + (-o * 0.24 * r).toFixed(3) + ' * var(--s)), calc(' + z.toFixed(3) + ' * var(--s))) rotateZ(' + (-6 * r).toFixed(2) + 'deg) rotateY(' + ((22 - 10 * o) * r).toFixed(2) + 'deg) rotateX(' + (8 * r).toFixed(2) + 'deg) scale(' + (o === 0 ? 1 : lerp(0.75, 1, r)).toFixed(3) + ')';
+      const far = o < -2.5 ? Math.max(0, 1 - (-o - 2.5) / 1.2) : 1;
+      const op = caseHide ? 0 : (o === 0 ? 1 : r * far);
+      el.style.opacity = String(op);
+      el.style.visibility = (o < -4 || o > 2.8 || op <= 0) ? 'hidden' : 'visible';
+      el.style.zIndex = String(100 + o * 10);
+      const isB = k === this.burnIdx;
+      const burnt = el.querySelector('[data-burnt]'), spin = el.querySelector('[data-spin]'), lab = el.querySelector('[data-lab]');
+      if (burnt) {
+        const rad = isB ? (v >= 0.72 ? 49.5 : Rad) : 0;
+        burnt.style.opacity = isB && !red && b > 0 ? '1' : '0';
+        const m = 'radial-gradient(circle closest-side, transparent 17.5%, #000 18%, #000 ' + rad.toFixed(2) + '%, transparent ' + (rad + 0.6).toFixed(2) + '%)';
+        burnt.style.webkitMaskImage = m; burnt.style.maskImage = m;
+      }
+      if (spin) spin.style.transform = isB && !red ? 'rotate(' + (900 * b * b + 140 * cl((v - 0.72) / 0.28)).toFixed(1) + 'deg)' : '';
+      if (lab) lab.style.opacity = String(o === 0 ? r : 1);
+    });
+    const laser = this.laserRef.current;
+    if (laser) {
+      laser.style.opacity = (!red && b > 0 && b < 1 && !caseHide) ? '1' : '0';
+      laser.style.left = laser.style.top = (50 - Rad).toFixed(2) + '%';
+      laser.style.width = laser.style.height = (2 * Rad).toFixed(2) + '%';
+    }
+    const shm = this.shimmerRef.current;
+    if (shm) { const t = cl((v - 0.72) / 0.1); shm.style.opacity = red ? '0' : Math.sin(t * Math.PI).toFixed(3); shm.style.transform = 'translateZ(4px) rotate(' + (t * 300).toFixed(1) + 'deg)'; }
+    const hg = this.hubGlowRef.current; if (hg) hg.style.opacity = red ? '0' : (0.9 * Math.sin(cl(v / 0.16) * Math.PI)).toFixed(3);
+    const bl = this.burnedRef.current; if (bl) bl.style.opacity = red ? '0' : Math.sin(cl((v - 0.72) / 0.16) * Math.PI).toFixed(3);
+    const panel = this.landPanelRef.current;
+    if (panel) {
+      panel.querySelectorAll('[data-reveal]').forEach((el) => { el.style.opacity = String(r); el.style.transform = 'translateY(' + ((1 - r) * 14).toFixed(1) + 'px)'; el.style.pointerEvents = r > 0.5 ? 'auto' : 'none'; });
+      panel.style.opacity = red ? String(cl((S - 0.6 * H) / H)) : '';
+    }
+    const hero = this.heroRef.current; if (hero) hero.style.opacity = red ? String(1 - cl(S / (0.8 * H))) : '';
+    const cue = this.cueRef.current; if (cue) cue.style.opacity = String(1 - cl(S / (0.15 * H)));
+  };
+  goTo(i) { this.setState({ active: i }); }
+  wrap(i) { const n = this.projects.length; return ((i % n) + n) % n; }
+  show(screen) {
+    cancelAnimationFrame(this.raf); this.raf = 0; this.tp = 0; this.p = 0;
+    this.cancelAuto();
+    this.clearLight(); this.inkPts = [];
+    this.setState({ screen, caseOpen: false, mode: null, note: -1, shapeOn: false });
+  }
+  ptDown = (e) => { this.lastPt = e.pointerType; };
+  spotSize() { return this.props.spotlightSize ?? 240; }
+  doodleBase() { return this.state.reduced ? 0.18 : (this.props.doodleOpacity ?? 0.08); }
+  setMode(mode) {
+    if (this.state.mode !== mode) this.setState({ mode });
+    if (mode !== 'torch' && !this.roaming) this.clearLight();
+    if (!mode) { const c = this.cursorRef.current; if (c) c.style.opacity = '0'; }
+    this.strokeBreak = true;
+  }
+  spotOff = () => this.setMode(null);
+  moveCursor(cx, cy) {
+    const hero = this.heroRef.current, c = this.cursorRef.current; if (!hero || !c) return;
+    const h = hero.getBoundingClientRect();
+    c.style.transform = 'translate(' + (cx - h.left) + 'px,' + (cy - h.top) + 'px)';
+    c.style.opacity = '1';
+  }
+  spotEnter = (e) => {
+    if (e.pointerType !== 'mouse' || this.state.reduced) return;
+    this.setState({ mode: 'torch', shapeOn: false });
+    this.moveCursor(e.clientX, e.clientY); this.placeSpot(e.clientX, e.clientY);
+  };
+  spotTap = () => { if (this.lastPt === 'mouse' || this.state.reduced) return; this.roam(4200); };
+  onHeroMove = (e) => {
+    if (e.pointerType === 'mouse') {
+      const m = this.state.mode; if (!m || this.state.reduced) return;
+      this.moveCursor(e.clientX, e.clientY);
+      if (m === 'torch' && !this.roaming) this.placeSpot(e.clientX, e.clientY);
+      if (m === 'pencil') this.ink(e.clientX, e.clientY);
+    } else if (this.drawTouch) this.ink(e.clientX, e.clientY);
+  };
+  onHeroLeave = (e) => {
+    if (e && e.pointerType && e.pointerType !== 'mouse') return;
+    if (!this.roaming) this.setMode(null);
+    if (this.state.note >= 0) this.setState({ note: -1 });
+  };
+  onHeroDown = (e) => {
+    this.lastPt = e.pointerType;
+    const onDoodle = e.target && e.target.closest && e.target.closest('[data-doodle]');
+    if (e.pointerType !== 'mouse' && !onDoodle && this.state.note >= 0) this.setState({ note: -1 });
+  };
+  h1Down = (e) => {
+    this.lastPt = e.pointerType;
+    if (e.pointerType === 'mouse' || this.state.reduced) return;
+    this.drawTouch = true; this.strokeBreak = true; this.ink(e.clientX, e.clientY);
+  };
+  h1Up = () => { this.drawTouch = false; this.strokeBreak = true; };
+  noteEnter(k, e) { if (e.pointerType !== 'mouse') return; if (this.state.note !== k) this.setState({ note: k }); }
+  noteLeave(k, e) { if (e.pointerType !== 'mouse') return; if (this.state.note === k) this.setState({ note: -1 }); }
+  noteTap(k) { if (this.lastPt === 'mouse') return; this.setState(s => ({ note: s.note === k ? -1 : k })); }
+  placeSpot(cx, cy) {
+    const hero = this.heroRef.current, sp = this.spotRef.current; if (!hero || !sp) return;
+    const h = hero.getBoundingClientRect(), S = this.spotSize();
+    sp.style.transform = 'translate(' + (cx - h.left - S / 2) + 'px,' + (cy - h.top - S / 2) + 'px)';
+    sp.style.opacity = '1';
+    if (this.roaming) this.moveCursor(cx, cy);
+    this.light(cx, cy, S / 2);
+  }
+  light(cx, cy, R) {
+    const hero = this.heroRef.current; if (!hero) return;
+    const base = this.doodleBase();
+    hero.querySelectorAll('[data-doodle]').forEach((el) => {
+      const r = el.getBoundingClientRect();
+      const d = Math.hypot(cx - (r.left + r.width / 2), cy - (r.top + r.height / 2));
+      const lit = Math.max(0, Math.min(1, 1 - (d - r.width * 0.3) / R));
+      if (lit > 0.35 && !el.dataset.found) { el.dataset.found = '1'; el.style.pointerEvents = 'auto'; }
+      const floor = el.dataset.found ? base + 0.14 : base;
+      el.style.opacity = (floor + (0.92 - floor) * lit).toFixed(3);
+      const w = el.firstElementChild; if (!w) return;
+      if (lit > 0.35 && !w.dataset.on) { w.dataset.on = '1'; w.style.animation = 'wobble 1.1s ease-in-out infinite'; }
+      else if (lit < 0.15 && w.dataset.on) { delete w.dataset.on; w.style.animation = ''; }
+    });
+  }
+  clearLight() {
+    const hero = this.heroRef.current, sp = this.spotRef.current;
+    if (sp) sp.style.opacity = '0';
+    if (!hero) return;
+    hero.querySelectorAll('[data-doodle]').forEach((el) => {
+      el.style.opacity = el.dataset.found ? 'calc(var(--db,0.08) + 0.14)' : 'var(--db,0.08)';
+      const w = el.firstElementChild; if (w) { delete w.dataset.on; w.style.animation = ''; }
+    });
+  }
+  roam(ms) {
+    if (this.state.reduced || !this.heroRef.current) return;
+    cancelAnimationFrame(this.roamRaf);
+    this.roaming = true;
+    this.setState({ mode: 'torch' });
+    const t0 = performance.now();
+    const step = (now) => {
+      const hero = this.heroRef.current; if (!hero) { this.roaming = false; return; }
+      const t = (now - t0) / ms;
+      if (t >= 1) { this.roaming = false; this.setMode(null); return; }
+      const h = hero.getBoundingClientRect();
+      const x = h.width * (0.55 + 0.33 * Math.sin(t * Math.PI * 2.4));
+      const y = h.height * (0.5 + 0.3 * Math.sin(t * Math.PI * 1.6 + 1));
+      this.placeSpot(h.left + x, h.top + y);
+      const fade = String(Math.min(1, t * 6, (1 - t) * 6));
+      if (this.spotRef.current) this.spotRef.current.style.opacity = fade;
+      if (this.cursorRef.current) this.cursorRef.current.style.opacity = fade;
+      this.roamRaf = requestAnimationFrame(step);
+    };
+    this.roamRaf = requestAnimationFrame(step);
+  }
+  ink(cx, cy) {
+    if (this.state.reduced) return;
+    const hero = this.heroRef.current; if (!hero) return;
+    const h = hero.getBoundingClientRect(), x = cx - h.left, y = cy - h.top, now = performance.now();
+    const L = this.inkPts || (this.inkPts = []);
+    const last = L[L.length - 1];
+    const brk = this.strokeBreak || !last || now - last.t > 140;
+    this.strokeBreak = false;
+    if (!brk && Math.hypot(x - last.x, y - last.y) < 2) return;
+    const len = brk ? 0 : Math.hypot(x - last.x, y - last.y);
+    L.push({ x, y, t: now, brk, len, fadeAt: now + 6000, jx: (Math.random() - 0.5) * 1.4, jy: (Math.random() - 0.5) * 1.4 });
+    let total = 0; for (const p of L) if (p.fadeAt > now) total += p.len;
+    for (let k = 0; total > 2400 && k < L.length; k++) { const p = L[k]; if (p.fadeAt > now) { p.fadeAt = now; total -= p.len; } }
+    if (!this.inkRaf) this.inkRaf = requestAnimationFrame(this.drawInk);
+  }
+  drawInk = () => {
+    this.inkRaf = 0;
+    const cv = this.inkRef.current, hero = this.heroRef.current;
+    if (!cv || !hero) { this.inkPts = []; return; }
+    const dpr = window.devicePixelRatio || 1, w = hero.clientWidth, hh = hero.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(hh * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(hh * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, hh);
+    const now = performance.now(), L = this.inkPts || [];
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (let k = 1; k < L.length; k++) {
+      const p = L[k], q = L[k - 1]; if (p.brk) continue;
+      const al = 1 - Math.max(0, Math.min(1, (now - p.fadeAt) / 900));
+      if (al <= 0) continue;
+      ctx.strokeStyle = 'rgba(242,240,247,' + (0.85 * al).toFixed(3) + ')'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+      ctx.strokeStyle = 'rgba(242,240,247,' + (0.32 * al).toFixed(3) + ')'; ctx.lineWidth = 0.7;
+      ctx.beginPath(); ctx.moveTo(q.x + q.jx, q.y + q.jy); ctx.lineTo(p.x + p.jx, p.y + p.jy); ctx.stroke();
+      if ((k % 3) === 0) { ctx.fillStyle = 'rgba(242,240,247,' + (0.25 * al).toFixed(3) + ')'; ctx.fillRect(p.x - p.jy, p.y + p.jx, 0.8, 0.8); }
+    }
+    let cut = 0; while (cut < L.length - 1 && now - L[cut + 1].fadeAt > 900) cut++;
+    if (cut) L.splice(0, cut);
+    if (L.some(p => now - p.fadeAt < 900)) this.inkRaf = requestAnimationFrame(this.drawInk);
+    else { this.inkPts = []; ctx.clearRect(0, 0, w, hh); }
+  };
+  shapeEnter = (e) => { if (e.pointerType !== 'mouse' || this.state.reduced) return; this.setMode('pencil'); this.setState({ shapeOn: true }); this.moveCursor(e.clientX, e.clientY); };
+  shapeLeave = (e) => { if (e.pointerType !== 'mouse') return; this.setState({ shapeOn: false }); };
+  shapeTap = () => {
+    if (this.lastPt === 'mouse' || this.state.reduced) return;
+    this.setState({ shapeOn: true }); clearTimeout(this.shT);
+    this.shT = setTimeout(() => this.setState({ shapeOn: false }), 1400);
+  };
+  shipLineEnter = (e) => {
+    if (e.pointerType !== 'mouse') return;
+    this.planeOut = false;
+    if (!this.state.reduced) { this.setMode('plane'); this.moveCursor(e.clientX, e.clientY); }
+    this.ship();
+  };
+  shipLineLeave = (e) => { if (e.pointerType !== 'mouse') return; this.planeOut = true; if (!this.shipping && this.state.mode === 'plane') this.setMode(null); };
+  shipTap = () => this.launch();
+  ship() {
+    if (this.state.reduced || this.shipping) return;
+    this.shipping = true;
+    const w = this.shipRef.current, s = this.streakRef.current;
+    [w, s].forEach((el) => { if (el) { el.style.animation = 'none'; void el.offsetWidth; } });
+    if (w) w.style.animation = 'shipGo 1.15s cubic-bezier(.6,0,.3,1) both';
+    if (s) s.style.animation = 'streakGo 1.15s linear both';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const pl = this.planeRef.current;
+      if (pl) { pl.style.animation = 'none'; void pl.offsetWidth; pl.style.animation = 'planeGo 1.15s cubic-bezier(.6,0,.3,1) both'; }
+    }));
+    setTimeout(() => { this.shipping = false; if (this.planeOut && this.state.mode === 'plane') this.setMode(null); }, 1250);
+  }
+  icons() {
+    if (this._ic) return this._ic;
+    const h = React.createElement, ink = 'oklch(0.96 0.006 290)', acc = 'var(--accent, oklch(0.72 0.19 295))', dark = 'oklch(0.2 0.012 290)';
+    const svg = (vb, kids) => h('svg', { viewBox: vb, width: '100%', height: '100%', style: { display: 'block', overflow: 'visible', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,.6))' } }, kids);
+    this._ic = {
+      torch: svg('0 0 40 40', h('g', { transform: 'rotate(-45 20 20)', strokeLinejoin: 'round' },
+        h('path', { d: 'M13 3 L27 3 L24 12 L16 12 Z', fill: dark, stroke: ink, strokeWidth: 1.4 }),
+        h('line', { x1: 14, y1: 3, x2: 26, y2: 3, stroke: acc, strokeWidth: 2.4, strokeLinecap: 'round' }),
+        h('rect', { x: 16, y: 12, width: 8, height: 24, rx: 2, fill: dark, stroke: ink, strokeWidth: 1.4 }),
+        h('rect', { x: 18.5, y: 17, width: 3, height: 5, rx: 1, fill: acc }))),
+      pencil: svg('0 0 32 32', h('g', { transform: 'rotate(45 16 16)', strokeLinejoin: 'round' },
+        h('rect', { x: 12, y: 1.5, width: 8, height: 4, rx: 1, fill: acc }),
+        h('rect', { x: 12, y: 5.5, width: 8, height: 18.5, fill: dark, stroke: ink, strokeWidth: 1.3 }),
+        h('path', { d: 'M12 24 L20 24 L16 30.5 Z', fill: 'oklch(0.85 0.03 70)', stroke: ink, strokeWidth: 1.3 }),
+        h('path', { d: 'M14.6 28.2 L17.4 28.2 L16 30.5 Z', fill: ink }))),
+      plane: svg('0 0 30 30', h('g', { strokeLinejoin: 'round', strokeLinecap: 'round' },
+        h('path', { d: 'M3 15 L27 5 L19 27 L15 18 Z', fill: dark, stroke: ink, strokeWidth: 1.4 }),
+        h('path', { d: 'M15 18 L27 5', fill: 'none', stroke: acc, strokeWidth: 1.4 })))
+    };
+    return this._ic;
+  }
+  openCase = () => {
+    const st = this.stageRef.current, disc = st && st.firstElementChild;
+    let intro = { size: '300px', half: '-150px', dx: '0px', dy: '0px' };
+    if (disc) {
+      const r = disc.getBoundingClientRect(), root = this.rootRef.current.getBoundingClientRect();
+      const s = r.width;
+      intro = { size: s + 'px', half: (-s / 2) + 'px', dx: (r.left + s / 2 - (root.left + root.width / 2)) + 'px', dy: (r.top + r.height / 2 - (root.top + root.height / 2)) + 'px' };
+    }
+    this.setState({ caseOpen: true, lens: 0, intro });
+  };
+  closeCase = () => {
+    if (this.state.closing) return;
+    this.setState({ closing: true });
+    clearTimeout(this.ct);
+    this.ct = setTimeout(() => { this.setState({ caseOpen: false, closing: false, outro: true }); this.ct = setTimeout(() => this.setState({ outro: false }), 1250); }, 1000);
+  };
+  nextCase = () => { this.setState(s => ({ active: s.active + 1, lens: 0 })); if (this.caseRef.current) this.caseRef.current.scrollTop = 0; };
+  scrollToLens(i) { const c = this.caseRef.current; const el = c && c.querySelector('[data-lens="' + i + '"]'); if (el) c.scrollTo({ top: el.getBoundingClientRect().top - c.getBoundingClientRect().top + c.scrollTop - 96, behavior: 'smooth' }); }
+  onCaseScroll = () => {
+    const c = this.caseRef.current; if (!c) return;
+    const mid = c.getBoundingClientRect().top + c.clientHeight * 0.35; let cur = 0;
+    c.querySelectorAll('[data-lens]').forEach((el, i) => { if (el.getBoundingClientRect().top < mid) cur = i; });
+    if (c.scrollTop + c.clientHeight >= c.scrollHeight - 4) cur = this.lensDefs.length - 1;
+    if (cur !== this.state.lens) this.setState({ lens: cur });
+  };
+  onStageMove = (e) => {
+    const el = this.stageRef.current; if (!el) return;
+    const r = el.getBoundingClientRect();
+    const s = parseFloat(getComputedStyle(el.firstElementChild).width) || 300;
+    const cx = r.left + r.width / 2, cy = r.top + r.height * 0.54;
+    const px = Math.max(-1, Math.min(1, (e.clientX - cx) / s)), py = Math.max(-1, Math.min(1, (e.clientY - cy) / s));
+    el.style.setProperty('--px', px.toFixed(3)); el.style.setProperty('--py', py.toFixed(3));
+    el.style.setProperty('--lift', (Math.hypot(e.clientX - cx, e.clientY - cy) < s / 2 ? s * 0.05 : 0) + 'px');
+  };
+  onStageLeave = () => { const el = this.stageRef.current; if (!el) return; el.style.setProperty('--px', '0'); el.style.setProperty('--py', '0'); el.style.setProperty('--lift', '0px'); };
+  makeBubble(word, lang, key) {
+    const h = React.createElement;
+    const fs = word.length > 8 ? 46 : 58;
+    const bg = 'var(--accent2, oklch(0.62 0.21 295))';
+    return h('div', { style: { animation: 'floaty 4s ease-in-out infinite' } },
+      h('div', { style: { position: 'relative', background: bg, borderRadius: 28, padding: '6px 26px 14px' } },
+        h('svg', { key, width: 230, height: 76, viewBox: '0 0 250 84', style: { display: 'block', overflow: 'visible' } },
+          h('text', { x: 125, y: 60, textAnchor: 'middle', style: { fontFamily: "'Dancing Script', cursive", fontSize: fs, fontWeight: 600, stroke: '#fff', strokeWidth: 1.4, strokeDasharray: 700, strokeDashoffset: 700, fill: 'transparent', animation: 'write 1.8s cubic-bezier(.5,0,.3,1) forwards' } }, word)),
+        h('span', { key: 'l' + key, style: { position: 'relative', zIndex: 1, display: 'block', textAlign: 'center', marginTop: -4, fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#fff', animation: 'fadeUp .5s .2s both' } }, lang),
+        h('span', { style: { position: 'absolute', left: 64, bottom: -10, width: 22, height: 22, background: bg, transform: 'rotate(45deg)', borderRadius: 4 } })));
+  }
+  renderVals() {
+    const st = this.state, scr = st.screen, i = st.i;
+    const [bw, bl] = this.byes[i % this.byes.length];
+    const a = st.active, n = this.projects.length;
+    const discs = this.projects.map((p, k) => {
+      let o = k - a; o -= n * Math.round(o / n);
+      const near = Math.min(o, 2.2), yaw = 22 + o * -10, x = o * 1.02;
+      const t = 'translate3d(calc(' + x.toFixed(3) + ' * var(--s)), calc(' + (-o * 0.24).toFixed(3) + ' * var(--s)), calc(' + (near * 0.42).toFixed(3) + ' * var(--s))) rotateZ(-6deg) rotateY(' + yaw + 'deg) rotateX(8deg)';
+      const op = o < -2.5 ? Math.max(0, 1 - (-o - 2.5) / 1.2) : 1;
+      return {
+        transform: t, z: 100 + o * 10, op: (st.caseOpen && !st.closing) ? 0 : op, vis: (o < -4 || o > 2.8 || op <= 0) ? 'hidden' : 'visible',
+        glint: (yaw * 3 + x * 40).toFixed(1) + 'deg', roll: (o * 110) + 'deg',
+        tilt: o === 0 ? 'translateZ(var(--lift)) rotateX(calc(var(--py) * -12deg)) rotateY(calc(var(--px) * 12deg))' : 'none',
+        spin: o === 0 ? 'running' : 'paused', inactive: o !== 0, isActive: o === 0,
+        slotId: 'project-disc-' + (k + 1), ph: 'Project ' + (k + 1) + ' screenshot',
+        label: 'Show ' + p.title, go: () => this.goTo(a + o)
+      };
+    });
+    const nav = [['projects', 'Projects'], ['contact', 'Contact']].map(([id, label]) => ({
+      label, go: id === 'contact' ? this.goContact : () => this.show(id),
+      color: scr === id ? 'oklch(0.96 0.006 290)' : 'oklch(0.66 0.01 290)', dot: scr === id ? 1 : 0
+    }));
+    const on = st.shapeOn && !st.reduced;
+    const word = 'Shape\u00a0it'.split(''), wn = word.length;
+    const shapeLetters = word.map((ch, k) => {
+      const t = k - (wn - 1) / 2;
+      return {
+        ch,
+        tf: on ? 'translateY(' + (t * t * 0.01 - 0.06).toFixed(3) + 'em) rotate(' + (t * 2.2 + this.jitter[k]).toFixed(1) + 'deg)' : 'none',
+        color: on ? 'transparent' : 'oklch(0.96 0.006 290)',
+        stroke: on ? '1.2px oklch(0.96 0.006 290)' : '0px transparent'
+      };
+    });
+    if (!this._dd) this._dd = this.doodleDefs.map(d => Object.assign({}, d, { svg: this.mkSvg(d.p) }));
+    const cur = this.projects[this.wrap(a)];
+    return {
+      accent: this.props.accent ?? 'oklch(0.72 0.19 295)',
+      caseRef: this.caseRef, caseOpen: st.caseOpen, intro: Object.assign({}, st.intro || { size: '300px', half: '-150px', dx: '0px', dy: '0px' }, { slot: 'project-disc-' + (this.wrap(a) + 1) }), closing: !!st.closing, outro: !!st.outro, openCase: this.openCase, closeCase: this.closeCase, nextCase: this.nextCase, onCaseScroll: this.onCaseScroll,
+      hasVideo: !!cur.video, noVideo: !cur.video, nextTitle: this.projects[this.wrap(a + 1)].title,
+      lenses: this.lensDefs.map(([title, hat, prompt], k) => ({ idx: k, num: String(k + 1).padStart(2, '0'), title, hat, prompt, go: () => this.scrollToLens(k),
+        bg: st.lens === k ? 'rgba(255,255,255,.08)' : 'transparent', color: st.lens === k ? 'oklch(0.96 0.006 290)' : 'oklch(0.62 0.01 290)', numColor: st.lens === k ? 'var(--accent, oklch(0.72 0.19 295))' : 'oklch(0.5 0.01 290)' })),
+      rootRef: this.rootRef, stageRef: this.stageRef, onStageMove: this.onStageMove, onStageLeave: this.onStageLeave,
+      heroRef: this.heroRef, heroContentRef: this.heroContentRef, doodleLayerRef: this.doodleLayerRef, spotRef: this.spotRef, shipRef: this.shipRef, streakRef: this.streakRef, cueRef: this.cueRef,
+      onHeroMove: this.onHeroMove, onHeroLeave: this.onHeroLeave, spotEnter: this.spotEnter, spotTap: this.spotTap, spotOff: this.spotOff, ptDown: this.ptDown,
+      shapeEnter: this.shapeEnter, shapeLeave: this.shapeLeave, shapeTap: this.shapeTap, shipTap: this.shipTap, goShipped: this.goShipped,
+      shapeLetters, shapeOp: on ? 1 : 0, shapeScale: on ? 1 : 0.96,
+      doodles: this._dd.map((d, k) => {
+        const x = parseFloat(d.x), y = parseFloat(d.y), w = parseFloat(d.w), left = x > 50;
+        return Object.assign({}, d, {
+          note: this.notes[k], open: st.note === k,
+          enter: (e) => this.noteEnter(k, e), leave: (e) => this.noteLeave(k, e), tap: () => this.noteTap(k),
+          popTf: 'translate(' + (left ? 'calc(-100% - ' + (w / 2 + 10) + 'px)' : (w / 2 + 10) + 'px') + ',' + (y > 70 ? '-85%' : y < 25 ? '-20%' : '-50%') + ')',
+          popOrigin: left ? '100% 50%' : '0% 50%'
+        });
+      }),
+      doodleBase: this.doodleBase(), spotSize: this.spotSize() + 'px', doodlePE: st.reduced ? 'auto' : 'none',
+      popAnim: st.reduced ? 'none' : 'popIn .45s cubic-bezier(.34,1.56,.64,1) both', popTilt: st.reduced ? 'none' : 'rotate(-2deg)',
+      heroCursor: st.mode ? 'none' : 'auto', verbCursor: st.mode ? 'none' : 'default',
+      isTorch: st.mode === 'torch', isPencil: st.mode === 'pencil', isPlane: st.mode === 'plane',
+      torchIcon: this.icons().torch, pencilIcon: this.icons().pencil, planeIcon: this.icons().plane,
+      inkRef: this.inkRef, cursorRef: this.cursorRef, planeRef: this.planeRef,
+      scrollerRef: this.scrollerRef, landPanelRef: this.landPanelRef, landCenterRef: this.landCenterRef, laserRef: this.laserRef, shimmerRef: this.shimmerRef, hubGlowRef: this.hubGlowRef, burnedRef: this.burnedRef, trailRef: this.trailRef, spiralLayerRef: this.spiralLayerRef, flyRef: this.flyRef,
+      onSDScroll: this.onSDScroll, cancelAuto: this.cancelAuto,
+      footRef: this.footRef, footDiscRef: this.footDiscRef, footInputRef: this.footInputRef, bttRef: this.bttRef, footFlyRef: this.footFlyRef, footTrailRef: this.footTrailRef,
+      idea: st.idea, onIdea: this.onIdea, onIdeaFocus: this.onIdeaFocus, onIdeaBlur: this.onIdeaBlur, onIdeaKey: this.onIdeaKey, focusIdea: this.focusIdea,
+      footShip: this.footShip, copyEmail: this.copyEmail, copied: st.copied, backToTop: this.backToTop,
+      footLabel: this.footLabel(), penSvg: this.penSvg(),
+      markerCursor: st.reduced ? 'text' : 'url("data:image/svg+xml,' + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><g transform='rotate(45 16 16)'><rect x='12' y='4' width='8' height='20' rx='2' fill='#07070a' stroke='#f3f1f7' stroke-width='1.4'/><rect x='12' y='1' width='8' height='6' rx='2' fill='#a97cf8'/><path d='M13 24 L19 24 L17.5 29 L14.5 29 Z' fill='#f3f1f7'/></g></svg>") + '") 7 25, text',
+      footDiscW: st.footFocus && st.narrow ? 'min(86vw,380px)' : 'clamp(240px,32vw,380px)',
+      footTilt: st.footPhase ? 'rotateX(30deg) rotateZ(-10deg) scale(.96)' : 'none', footSleeve: !!st.footPhase,
+      hasIdea: !!(st.idea || '').trim() && !st.sentNote, noIdea: !(st.idea || '').trim() && !st.sentNote, sentNote: st.sentNote,
+      landDiscs: this.projects.map((p, k) => { let o = k - a; o -= n * Math.round(o / n); return { k: String(k), label: p.title, aria: 'Show ' + p.title, inactive: o !== 0, isActive: o === 0, go: () => this.goTo(a + o) }; }),
+      onHeroDown: this.onHeroDown, h1Down: this.h1Down, h1Up: this.h1Up, shipLineEnter: this.shipLineEnter, shipLineLeave: this.shipLineLeave,
+      cvLabel: st.narrow ? 'CV ↓' : 'Download CV ↓',
+      navItems: nav, isAbout: scr === 'about', isProjects: scr === 'projects', isContact: scr === 'contact',
+      goAbout: () => this.show('about'), goProjects: () => this.show('projects'), goContact: this.goContact,
+      byeBubble: this.makeBubble(bw, bl, 'b' + i),
+      discs, cur, curNum: String(this.wrap(a) + 1).padStart(2, '0'), total: String(n).padStart(2, '0'),
+      atStart: false, atEnd: false,
+      prev: () => this.goTo(a - 1), next: () => this.goTo(a + 1)
+    };
+  }
+}
+</script>
+</body>
+</html>

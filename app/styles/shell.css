@@ -1,0 +1,115 @@
+.page {
+  font-family: var(--sans);
+  background: var(--bg);
+  overflow-x: clip;
+}
+
+/* fixed nav with a soft fade so content scrolls under it */
+.nav-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  background: linear-gradient(var(--bg) 35%, transparent);
+  pointer-events: none;
+}
+.nav-bar .nav {
+  pointer-events: auto;
+  padding: 24px clamp(20px, 5vw, 64px);
+}
+.nav-links {
+  gap: clamp(14px, 3vw, 36px);
+}
+.nav-cv {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 13px;
+  white-space: nowrap;
+  transition: border-color 0.2s, background 0.2s;
+}
+.nav-cv:hover {
+  color: var(--fg);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.04);
+}
+.nav-cv-short {
+  display: none;
+}
+.nav-sound {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(0.6 0.01 290);
+  transition: color 0.2s;
+}
+.nav-sound:hover,
+.nav-sound[aria-pressed="true"] {
+  color: var(--fg);
+}
+@media (max-width: 559px) {
+  .nav-cv-long,
+  .nav-sound-label {
+    display: none;
+  }
+  .nav-cv-short {
+    display: inline;
+  }
+}
+
+/* temporary layout for the stubs; Tasks 3–5 replace these sections */
+.stage {
+  --r: 1;
+}
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.pager .pager-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid oklch(0.32 0.015 290);
+  background: transparent;
+  color: oklch(0.9 0.006 290);
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.pager .pager-arrow:hover {
+  border-color: var(--accent);
+}
+
+/* Sideways swipe/drag steps the carousel; vertical swipes still scroll the page. */
+.stage { touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+.stage:active { cursor: grabbing; }
+.stage .disc-open, .stage .disc-hit { cursor: pointer; }
+/* While a finger or trackpad holds the discs they track it 1:1; letting go springs them onto a disc. */
+.stage[data-dragging] { cursor: grabbing; }
+.stage[data-dragging] .disc-tilt { transition: none; }
+.stage[data-dragging] .disc-open { opacity: 0; pointer-events: none; }
+
+/* First-visit loader (components/Loader.tsx) */
+.loader { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  animation: fadeOut 0.55s 1.55s forwards; }
+html[data-noloader] .loader { display: none; }
+.loader-mark { position: relative; width: 128px; height: 128px; display: flex; align-items: center; justify-content: center; }
+.loader-ring { position: absolute; inset: 0; transform: rotate(-90deg); }
+.loader-arc { animation: ringDraw 1.3s 0.1s cubic-bezier(0.6, 0, 0.3, 1) forwards; }
+@keyframes ringDraw { from { stroke-dashoffset: 340; } to { stroke-dashoffset: 0; } }
+.loader-d { font-weight: 300; font-size: 60px; line-height: 1; letter-spacing: -0.04em; color: var(--fg); animation: heroIn 0.7s 0.15s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.loader-dot { position: absolute; left: calc(50% + 22px); top: calc(50% + 14px); width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+  animation: loaderDot 0.5s 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes loaderDot { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }

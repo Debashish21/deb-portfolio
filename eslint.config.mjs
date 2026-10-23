@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Claude Design export kept for reference
+    "Portfolio with animated character/**",
+    "design-v3/**",
+    ".superpowers/**",
   ]),
 ]);
 

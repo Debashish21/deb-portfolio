@@ -1,0 +1,21 @@
+/* Perspective grid behind the page (components/PerspectiveGrid.tsx). --gd is the scroll drift. */
+.page { isolation: isolate; }
+.pgrid { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; perspective: 700px; perspective-origin: 50% 45%;
+  opacity: 0.09; transition: perspective-origin 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.pgrid-room { position: absolute; inset: 0; transform-style: preserve-3d; }
+/* Each plane fades into the page colour by painting a gradient over its lines (layer 1) rather than with a
+   mask: masks on 3D-transformed layers make the GPU redraw large offscreen surfaces on every tilt. */
+.pgrid-plane { position: absolute; --fade: to top; background-size: 100% 100%, 80px 80px, 80px 80px;
+  background-image: linear-gradient(var(--fade), transparent, var(--bg) 85%),
+    linear-gradient(to right, oklch(0.96 0.006 290 / 0.75) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.96 0.006 290 / 0.75) 1px, transparent 1px); }
+.pgrid-plane[data-gp="floor"] { left: 0; right: 0; bottom: 0; height: 1800px; transform-origin: 50% 100%; transform: rotateX(90deg);
+  --fade: to top; background-position: 0 0, 0 var(--gd, 0px), 0 var(--gd, 0px); }
+.pgrid-plane[data-gp="ceiling"] { left: 0; right: 0; top: 0; height: 1800px; transform-origin: 50% 0; transform: rotateX(-90deg);
+  --fade: to bottom; background-position: 0 0, 0 var(--gdn, 0px), 0 var(--gdn, 0px); }
+.pgrid-plane[data-gp="left"] { top: 0; bottom: 0; left: 0; width: 1800px; transform-origin: 0 50%; transform: rotateY(90deg);
+  --fade: to right; background-position: 0 0, var(--gdn, 0px) 0, var(--gdn, 0px) 0; }
+.pgrid-plane[data-gp="right"] { top: 0; bottom: 0; right: 0; width: 1800px; transform-origin: 100% 50%; transform: rotateY(-90deg);
+  --fade: to left; background-position: 0 0, var(--gd, 0px) 0, var(--gd, 0px) 0; }
+.pgrid-vignette { position: absolute; inset: 0;
+  background: radial-gradient(ellipse 45% 40% at 50% 45%, oklch(0.13 0.008 290) 0%, oklch(0.13 0.008 290 / 0.6) 45%, transparent 100%); }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;background:oklch(0.14 0.012 290);color:oklch(0.96 0.006 290);-webkit-font-smoothing:antialiased}
+a{color:oklch(0.96 0.006 290);text-decoration:none}
+a:hover{color:oklch(0.72 0.19 295)}
+@keyframes write{0%{stroke-dashoffset:700;fill:transparent}70%{stroke-dashoffset:0;fill:transparent}100%{stroke-dashoffset:0;fill:#fff}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes cue{0%{transform:translateY(0);opacity:0}30%{opacity:1}100%{transform:translateY(14px);opacity:0}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" onMouseMove="{{ onMove }}" onMouseLeave="{{ onLeave }}" style="position:relative;height:100vh;min-height:520px;overflow:hidden;font-family:'Geist',system-ui,sans-serif;background:oklch(0.14 0.012 290);display:flex;flex-direction:column">
+
+  <div style="position:absolute;inset:0;perspective:520px;perspective-origin:50% 38%;pointer-events:none;overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:0;height:56%;background:radial-gradient(60% 40% at 50% 100%, oklch(0.45 0.16 295 / 0.28), transparent 70%)"></div>
+    <div ref="{{ gridRef }}" style="position:absolute;left:-60%;width:220%;top:56%;height:140%;transform-origin:50% 0;transform:rotateX(72deg);background-image:linear-gradient(to right, oklch(0.72 0.19 295 / 0.55) 1px, transparent 1px),linear-gradient(to bottom, oklch(0.72 0.19 295 / 0.6) 3px, transparent 3px);background-size:72px 72px;-webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 25%);mask-image:linear-gradient(to bottom, transparent 0%, #000 25%);transition:transform .5s cubic-bezier(.2,.7,.2,1), background-position .5s cubic-bezier(.2,.7,.2,1)"></div>
+    <div style="position:absolute;left:0;right:0;top:56%;height:1px;background:linear-gradient(to right, transparent, oklch(0.72 0.19 295 / 0.6), transparent)"></div>
+  </div>
+
+  <nav style="position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px clamp(20px,5vw,64px);max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto">
+    <a href="#about" style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:500;letter-spacing:-0.01em">
+      <span style="width:8px;height:8px;border-radius:50%;background:oklch(0.72 0.19 295);box-shadow:0 0 12px oklch(0.72 0.19 295)"></span>
+      <span>Debashish</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:clamp(20px,3vw,40px);font-size:14px">
+      <a href="#about" style="position:relative;color:oklch(0.96 0.006 290)">About</a>
+      <a href="#projects" style="color:oklch(0.72 0.01 290)" style-hover="color:oklch(0.96 0.006 290)">Projects</a>
+      <a href="#contact" style="color:oklch(0.72 0.01 290)" style-hover="color:oklch(0.96 0.006 290)">Contact</a>
+    </div>
+  </nav>
+
+  <main id="about" style="position:relative;z-index:2;flex:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:48px;max-width:1280px;width:100%;box-sizing:border-box;margin:0 auto;padding:24px clamp(20px,5vw,64px) 120px">
+    <div style="flex:1 1 340px;max-width:600px;display:flex;flex-direction:column;gap:28px">
+      <div style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.72 0.19 295)">Product Owner</div>
+      <h1 style="margin:0;font-weight:300;font-size:clamp(38px,4.6vw,64px);line-height:1.12;letter-spacing:-0.03em;text-wrap:pretty">Bootstrapping ideas until I make it <span style="color:oklch(0.72 0.19 295);font-weight:400">one day</span>.</h1>
+      <p style="margin:0;max-width:440px;font-size:17px;line-height:1.6;color:oklch(0.74 0.01 290);text-wrap:pretty">I'm Debashish. I turn half-baked ideas into products, one sprint at a time.</p>
+    </div>
+
+    <div style="flex:0 1 360px;display:flex;justify-content:center;position:relative;padding-top:110px">
+      <div ref="{{ charRef }}" style="position:relative;width:min(380px,36vw,52vh);min-width:220px;aspect-ratio:380/440;transition:transform .45s cubic-bezier(.2,.7,.2,1);transform-origin:50% 90%">
+        <image-slot id="avatar-bitmoji" shape="rounded" radius="32" fit="contain" placeholder="Drop your Bitmoji / avatar (transparent PNG works best)" style="width:100%;height:100%;display:block"></image-slot>
+        <div style="position:absolute;top:-118px;left:-20px;z-index:3;pointer-events:none">{{ bubble }}</div>
+      </div>
+    </div>
+  </main>
+
+  <a href="#projects" style="position:absolute;z-index:2;left:50%;bottom:32px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:oklch(0.72 0.01 290)">
+    <span>Scroll to projects</span>
+    <span style="width:22px;height:36px;border-radius:12px;border:1px solid oklch(0.5 0.02 290);display:flex;justify-content:center;padding-top:7px;box-sizing:border-box">{{ cueDot }}</span>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;cycleSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:3.2,&quot;min&quot;:2,&quot;max&quot;:8,&quot;step&quot;:0.2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;headTilt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { i: 0 };
+  rootRef = React.createRef();
+  gridRef = React.createRef();
+  charRef = React.createRef();
+  greetings = [
+    ['hello', 'English'], ['hola', 'Español'], ['bonjour', 'Français'], ['namaste', 'हिन्दी'],
+    ['ciao', 'Italiano'], ['nomoshkar', 'বাংলা'], ['olá', 'Português'], ['hallo', 'Deutsch'],
+    ['merhaba', 'Türkçe'], ['konnichiwa', '日本語']
+  ];
+  componentDidMount() { this.start(); }
+  componentDidUpdate(p) { if (p.cycleSeconds !== this.props.cycleSeconds) this.start(); }
+  componentWillUnmount() { clearInterval(this.t); }
+  start() {
+    clearInterval(this.t);
+    const s = Math.max(2, this.props.cycleSeconds ?? 3.2);
+    this.t = setInterval(() => this.setState(st => ({ i: (st.i + 1) % this.greetings.length })), s * 1000);
+  }
+  onMove = (e) => {
+    const r = this.rootRef.current?.getBoundingClientRect(); if (!r) return;
+    const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+    const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+    if (this.gridRef.current) {
+      this.gridRef.current.style.transform = `rotateX(${72 - ny * 4}deg) rotateZ(${nx * -3}deg)`;
+      this.gridRef.current.style.backgroundPosition = `${nx * -36}px ${ny * -36}px`;
+    }
+    if (this.charRef.current && (this.props.headTilt ?? true)) {
+      const c = this.charRef.current.getBoundingClientRect();
+      const dx = (e.clientX - (c.left + c.width / 2)) / r.width;
+      const dy = (e.clientY - (c.top + c.height / 3)) / r.height;
+      this.charRef.current.style.transform = `translate(${dx * 24}px, ${dy * 14}px) rotate(${dx * 10}deg)`;
+    }
+  };
+  onLeave = () => {
+    if (this.gridRef.current) { this.gridRef.current.style.transform = 'rotateX(72deg)'; this.gridRef.current.style.backgroundPosition = '0 0'; }
+    if (this.charRef.current) this.charRef.current.style.transform = '';
+  };
+  renderVals() {
+    const h = React.createElement;
+    const [word, lang] = this.greetings[this.state.i];
+    const fs = word.length > 8 ? 46 : 58;
+    const bubble = h('div', { style: { animation: 'floaty 4s ease-in-out infinite', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8 } },
+      h('div', { style: { position: 'relative', background: 'oklch(0.6 0.22 295)', borderRadius: 28, padding: '6px 26px 10px', boxShadow: '0 12px 40px oklch(0.6 0.22 295 / 0.45)' } },
+        h('svg', { key: this.state.i, width: 250, height: 84, viewBox: '0 0 250 84', style: { display: 'block', overflow: 'visible' } },
+          h('text', { x: 125, y: 60, textAnchor: 'middle', style: { fontFamily: "'Dancing Script', cursive", fontSize: fs, fontWeight: 600, stroke: '#fff', strokeWidth: 1.4, strokeDasharray: 700, strokeDashoffset: 700, fill: 'transparent', animation: 'write 1.8s cubic-bezier(.5,0,.3,1) forwards' } }, word)),
+        h('span', { style: { position: 'absolute', left: 64, bottom: -10, width: 22, height: 22, background: 'oklch(0.6 0.22 295)', transform: 'rotate(45deg)', borderRadius: 4 } })),
+      h('span', { key: 'l' + this.state.i, style: { marginLeft: 20, marginTop: 6, fontFamily: "'Geist Mono', monospace", fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'oklch(0.86 0.01 290)', animation: 'fadeUp .5s .2s both' } }, lang));
+    const cueDot = h('span', { style: { width: 4, height: 7, borderRadius: 2, background: 'oklch(0.72 0.19 295)', animation: 'cue 1.8s ease-in-out infinite' } });
+    return { rootRef: this.rootRef, gridRef: this.gridRef, charRef: this.charRef, onMove: this.onMove, onLeave: this.onLeave, bubble, cueDot };
+  }
+}
+</script>
+</body>
+</html>
