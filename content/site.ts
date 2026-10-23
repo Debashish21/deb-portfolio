@@ -6,7 +6,7 @@ export const site = {
   email: "hello@debashish.com",
   cvHref: "/Debashish-CV.pdf",
   linkedin: "https://www.linkedin.com/",
-  github: "https://github.com/",
+  github: "https://github.com/Debashish21",
   signoff: "Bootstrapping ideas, one sprint at a time.",
 };
 
