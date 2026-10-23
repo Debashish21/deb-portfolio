@@ -46,11 +46,23 @@ Live at https://debashish-profile.vercel.app (`site.url` in `content/site.ts`; c
 - `app/opengraph-image.tsx` share card; `app/robots.ts`; `app/sitemap.ts`.
 - JSON-LD (Person, WebSite, ProfilePage with projects) from `lib/seo.ts`, rendered in `app/page.tsx`.
 - `app/llms.txt/route.ts`: Markdown summary for AI answer engines, built from `content/`.
-- To do (owner): Google Search Console verification + sitemap submit; add the site URL to LinkedIn and GitHub profiles. Next lever: per-project pages (`/projects/[slug]`) so case-study text is crawlable.
+- `public/google47653a6a919e1e9f.html`: Google Search Console verification file. **Don't delete it**; Google re-checks it.
+
+**Search engine setup (done 2026-10-23):**
+- Google Search Console: URL-prefix property verified, `sitemap.xml` submitted (showed "Couldn't fetch" right after, a known new-property quirk; the sitemap serves 200 to Googlebot). If still failing after a few days, resubmit as `sitemap.xml?v=1`.
+- Bing Webmaster Tools: imported from GSC. Manual sitemap submit hit Bing's own "unexpected error on the server side"; robots.txt advertises the sitemap so Bing finds it anyway. Retry the submit later if it isn't listed.
 
 ### Open items
 
+**Later (agreed with owner):**
+- Check GSC/Bing sitemap status went to Success; request indexing of the homepage if not done.
+- Owner: add the site URL to LinkedIn (contact + Featured), GitHub profile/README and the CV.
+- Optional: rename Vercel subdomain to `debashishram.vercel.app` (free) or buy a custom .com; then update `site.url` and re-add in GSC/Bing.
+- Per-project pages (`/projects/[slug]`) so case-study text is crawlable and each project ranks on its own; add them to `app/sitemap.ts`.
+- IndexNow for Bing (ping on deploy), worth it once there are more pages.
+
+**Code:**
 - **Next.js security advisory**: `next build` warns 16.4.0 has a known vulnerability. Upgrade with `next upgrade --agent=security`.
 - Contact details (`content/site.ts`) and the CV (`public/Debashish-CV.pdf`) are real; no placeholders left.
 - Vitest warns `vitest.config.ts` uses ESM in a CJS package (harmless; rename to `.mts` to silence).
-- Deploy: Vercel project, repo `github.com/Debashish21/deb-portfolio` (`main`).
+- Deploy: Vercel auto-deploys `main` from `github.com/Debashish21/deb-portfolio` to https://debashish-profile.vercel.app.
