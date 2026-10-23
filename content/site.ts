@@ -3,9 +3,9 @@
 export const site = {
   name: "Debashish",
   role: "Product Owner",
-  email: "hello@debashish.com",
+  email: "debashishram@gmail.com",
   cvHref: "/Debashish-CV.pdf",
-  linkedin: "https://www.linkedin.com/",
+  linkedin: "https://www.linkedin.com/in/debashish-ram/",
   github: "https://github.com/Debashish21",
   signoff: "Bootstrapping ideas, one sprint at a time.",
 };
